@@ -37,13 +37,12 @@ const jsonLd = [
     <div class="md:pr-4">
       <p class="eyebrow">Aichi, Japan · Travel guide</p>
       <h1 class="mt-4 text-[3.4rem] md:text-[5.4rem]">Discover Aichi</h1>
-      <p class="mt-5 max-w-md text-lg leading-relaxed text-ink-soft">
-        Short videos by people who live here, paired with the practical details you need — from Nagoya's coffee shops to
-        castle towns, pottery lanes and quiet coast.
+      <p class="mt-5 max-w-md text-lg leading-relaxed text-ink-soft" data-hero-lede>
+        Short local videos and practical tips for exploring Nagoya and beyond.
       </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href="/spots/" class="btn btn-primary">Explore Spots <Icon name="arrow-right" size={16} /></a>
-        <a href="/map/" class="btn btn-ghost">Explore Map <Icon name="map" size={16} /></a>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <a href="/spots/" class="btn btn-primary w-full sm:w-auto">Explore Spots <Icon name="arrow-right" size={16} /></a>
+        <a href="/map/" class="btn btn-ghost w-full sm:w-auto">Explore Map <Icon name="map" size={16} /></a>
       </div>
     </div>
     <FramedImage
