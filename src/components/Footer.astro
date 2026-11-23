@@ -24,7 +24,7 @@ const link = 'text-ink-soft no-underline transition-colors duration-500 hover:te
         <p id="footer-about" class="label label-gold">About</p>
         <ul class="mt-5 space-y-2 text-[0.875rem]">
           <li><a class={link} href="/about/">About us</a></li>
-          <li><a class={link} href="/about/#contact">Contact</a></li>
+          {SITE.contactEmail && <li><a class={link} href="/about/#contact">Contact</a></li>}
           <li><a class={link} href="/privacy/">Privacy Policy</a></li>
           {
             SITE.social.map((s) => (

@@ -2,6 +2,7 @@
 const path = Astro.url.pathname;
 const nav = [
   { href: '/spots/', label: 'Spots' },
+  { href: '/areas/', label: 'Areas' },
   { href: '/map/', label: 'Map' },
   { href: '/about/', label: 'About' },
 ];
@@ -14,12 +15,16 @@ const isActive = (href: string) => path.startsWith(href) || path === href.slice(
   >Skip to content</a
 >
 <header class="border-b border-line">
-  <div class="container-page flex h-16 items-center justify-between gap-6 md:h-24">
-    <a href="/" class="font-display text-[1.4rem] leading-none text-ink no-underline md:text-[1.75rem]" aria-label="Aichi Reel Guide — home">
+  <div class="container-page flex flex-col md:h-24 md:flex-row md:items-center md:justify-between md:gap-6">
+    <a
+      href="/"
+      class="flex h-16 items-center font-display text-[1.4rem] leading-none text-ink no-underline md:h-auto md:text-[1.75rem]"
+      aria-label="Aichi Reel Guide — home"
+    >
       Aichi Reel Guide
     </a>
-    <nav aria-label="Main">
-      <ul class="flex items-center gap-5 md:gap-12">
+    <nav aria-label="Main" class="border-t border-line md:border-0">
+      <ul class="flex h-12 items-center justify-between md:h-auto md:gap-12">
         {
           nav.map((item) => (
             <li>

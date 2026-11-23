@@ -56,25 +56,20 @@ const updated = '23 November 2026';
           serve the images. “Open in Google Maps” links take you to Google, whose privacy policy applies there.
         </p>
 
-        <h2>Contact</h2>
-        <p>
-          If you email us, we use your message only to reply. Questions about this policy?
-          {
-            SITE.contactEmail ? (
-              <>
-                {' '}Write to{' '}
+        {
+          SITE.contactEmail && (
+            <>
+              <h2>Contact</h2>
+              <p>
+                If you email us, we use your message only to reply. Questions about this policy? Write to{' '}
                 <a href={`mailto:${SITE.contactEmail}`} class="link-quiet">
                   {SITE.contactEmail}
                 </a>
                 .
-              </>
-            ) : (
-              <>
-                {' '}See our <a href="/about/#contact" class="link-quiet">contact details</a>.
-              </>
-            )
-          }
-        </p>
+              </p>
+            </>
+          )
+        }
       </div>
     </div>
   </div>

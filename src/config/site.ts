@@ -2,14 +2,22 @@
  * Site-wide settings. Edit these values (or the environment variables they
  * read) rather than hard-coding them in components.
  */
+function parseEmail(value: string | undefined): string | null {
+  const v = value?.trim() ?? '';
+  return /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(v) ? v : null;
+}
+
 export const SITE = {
   name: 'Aichi Reel Guide',
   tagline: 'Discover Aichi through local videos.',
   description:
     'An independent English guide to Aichi, Japan — Nagoya and beyond — told through short videos by local creators. Cafes, castles, crafts and quiet corners worth the trip.',
   locale: 'en_US',
-  /** Contact address shown on the About page. Leave null to hide it. */
-  contactEmail: (import.meta.env.PUBLIC_CONTACT_EMAIL as string | undefined) || null,
+  /**
+   * Contact address from PUBLIC_CONTACT_EMAIL. When unset (or not an email
+   * address), every contact section and link is hidden — no placeholder text.
+   */
+  contactEmail: parseEmail(import.meta.env.PUBLIC_CONTACT_EMAIL as string | undefined),
   /**
    * Operator's social accounts, shown in the footer. Add entries like
    * { label: 'Instagram', href: 'https://www.instagram.com/your_handle/' }.

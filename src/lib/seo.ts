@@ -1,7 +1,8 @@
 import type { Crumb } from '~/components/Breadcrumbs.astro';
 
 export function absoluteUrl(path: string, site: URL | undefined): string {
-  return new URL(path, site ?? 'https://aichi-reel-guide.pages.dev').href;
+  if (!site) throw new Error('`site` is not configured — set SITE_URL or the default in astro.config.mjs');
+  return new URL(path, site).href;
 }
 
 export function breadcrumbJsonLd(items: Crumb[], site: URL | undefined) {

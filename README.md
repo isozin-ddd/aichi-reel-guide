@@ -27,7 +27,7 @@
 
 | 変数 | 用途 |
 | --- | --- |
-| `SITE_URL` | 本番URL（canonical / OGP / sitemap）。未設定時はプレビューの `CF_PAGES_URL` |
+| `SITE_URL` | サイトの公開URL（canonical / og:url / og:image / sitemap / robots.txt）。未設定時は `https://aichi-reel-guide.ghj87vy8mm.workers.dev` |
 | `PUBLIC_CF_ANALYTICS_TOKEN` | Cloudflare Web Analytics（Cookie なし）。空なら読み込まない |
 | `PUBLIC_MAP_TILE_URL` / `PUBLIC_MAP_TILE_ATTRIBUTION` / `PUBLIC_MAP_TILE_MAX_ZOOM` | 地図タイル提供元とクレジット |
 | `PUBLIC_CONTACT_EMAIL`, `PUBLIC_SOCIAL_INSTAGRAM` 等 | 連絡先・運営者SNS（フッター/About） |

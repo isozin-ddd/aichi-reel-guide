@@ -9,7 +9,9 @@ import { fileURLToPath } from 'node:url';
 const mode = process.argv.includes('dev') ? 'development' : 'production';
 const env = { ...loadEnv(mode, process.cwd(), ''), ...process.env };
 
-const site = (env.SITE_URL || env.CF_PAGES_URL || 'https://aichi-reel-guide.pages.dev').replace(/\/$/, '');
+/** Public origin used for canonical, og:url, og:image, sitemap and robots.txt. Override with SITE_URL. */
+const DEFAULT_SITE_URL = 'https://aichi-reel-guide.ghj87vy8mm.workers.dev';
+const site = (env.SITE_URL || DEFAULT_SITE_URL).replace(/\/$/, '');
 
 /**
  * Pages that must never appear in the sitemap: sample spots (only ever built for
