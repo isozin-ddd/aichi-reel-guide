@@ -1,0 +1,44 @@
+{
+  "slug": "nagoya-castle",
+  "name_en": "Nagoya Castle",
+  "name_ja": "名古屋城",
+  "area": "nagoya",
+  "category": "culture-history",
+  "address": "1-1 Honmaru, Naka-ku, Nagoya, Aichi 460-0031",
+  "latitude": 35.1855,
+  "longitude": 136.8991,
+  "summary_en": "Tokugawa Ieyasu's great castle, where the rebuilt Hommaru Palace glows with gold-leaf paintings. The main keep is closed for now.",
+  "description_en": [
+    "Tokugawa Ieyasu ordered Nagoya Castle built in 1610, and for more than two centuries it was the seat of the Owari Tokugawa, one of the three senior branches of the shogun's family. Air raids in May 1945 destroyed most of it. The keep, crowned with its famous golden shachihoko, was rebuilt in concrete in 1959.",
+    "The keep is currently closed, so the reason to come today is the Hommaru Palace. Rebuilt with traditional joinery and opened in full in 2018, it is a run of tatami rooms whose sliding doors are painted with tigers, pheasants and cherry blossoms in the style of the Kano school. Entry is included in the castle ticket.",
+    "Give yourself one to two hours. Walk the stone walls and moats, look for the Southwest Corner Watchtower — one of the few original Edo-period buildings to survive the war — and come in late March or early April, when about 900 cherry trees bloom across the grounds."
+  ],
+  "highlights_en": [
+    "Hommaru Palace's painted sliding doors",
+    "Golden shachihoko on the keep roof",
+    "Free English tours at 12:30 most days"
+  ],
+  "price_level": 1,
+  "opening_hours": "9:00–16:30 (last entry 16:00). Adults ¥1,000 from 1 October 2026; junior high school age and under free.",
+  "closed_days": "29 December – 1 January (may change for events)",
+  "nearest_station": "Nagoyajo Station (Meijo Line, M07)",
+  "access_en": "5-minute walk from Exit 7 of Nagoyajo Station on the Meijo subway line. The Me-guru sightseeing bus and city buses also stop at the main gate (Nagoyajo Seimon-mae). Free volunteer English tours start at 12:30 from the Main Gate and East Gate (not held 29 December – 4 January, and paused 22 June – 30 September in 2026).",
+  "official_url": "https://www.nagoyajo.city.nagoya.jp/en/",
+  "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Nagoya%20Castle",
+  "image": "../../assets/areas/nagoya.jpg",
+  "image_alt": "Illustration of a tiered castle keep beside a calm moat",
+  "image_credit": "Illustration: Aichi Reel Guide",
+  "traveler_info": {
+    "english_menu": null,
+    "cards_accepted": true,
+    "reservation": false,
+    "vegetarian": null,
+    "tax_free": null
+  },
+  "videos": [],
+  "featured": true,
+  "status": "open",
+  "draft": false,
+  "is_sample": false,
+  "last_verified_at": "2026-11-24"
+}
