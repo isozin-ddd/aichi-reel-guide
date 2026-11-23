@@ -32,10 +32,10 @@ const jsonLd = [
   jsonLd={jsonLd}
 >
   <!-- Hero -->
-  <section class="container-page page-top grid gap-12 md:grid-cols-[5fr_7fr] md:items-end md:gap-16">
+  <section class="container-page grid gap-10 md:grid-cols-[5fr_7fr] md:items-end md:gap-16 md:pt-16">
     <div class="md:pb-4">
       <p class="label label-gold">Aichi, Japan</p>
-      <h1 class="display-xl mt-6 md:mt-10">Discover<br class="hidden md:block" /> Aichi</h1>
+      <h1 class="display-xl mt-5 md:mt-10">Discover<br class="hidden md:block" /> Aichi</h1>
       <p class="text-body mt-6 max-w-sm md:mt-10" data-hero-lede>
         Short local videos and practical tips for exploring Nagoya and beyond.
       </p>
@@ -47,9 +47,9 @@ const jsonLd = [
     <FramedImage
       src={hero}
       alt="Illustration of a castle above green hills and a calm bay under a golden sun"
-      sizes="(min-width: 1280px) 680px, (min-width: 768px) 55vw, calc(100vw - 48px)"
+      sizes="(min-width: 1280px) 680px, (min-width: 768px) 55vw, 100vw"
       widths={[480, 720, 960, 1280, 1600]}
-      class="aspect-square md:aspect-[5/4]"
+      class="order-first -mx-6 aspect-[4/3] md:order-none md:mx-0 md:aspect-[5/4]"
       loading="eager"
       fetchpriority="high"
     />
@@ -105,8 +105,10 @@ const jsonLd = [
               <span class="font-display text-[2rem] leading-none transition-colors duration-500 group-hover:text-gold md:text-[3rem]">
                 {a.data.name}
               </span>
-              <span class="text-body hidden md:col-start-2 md:row-start-1 md:block">{a.data.tagline}</span>
-              <span class="label" lang="ja">
+              <span class="text-body col-span-2 row-start-2 mt-2 md:col-span-1 md:col-start-2 md:row-start-1 md:mt-0">
+                {a.data.tagline}
+              </span>
+              <span class="label col-start-2 row-start-1 md:col-start-3" lang="ja">
                 {a.data.name_ja}
               </span>
             </a>
