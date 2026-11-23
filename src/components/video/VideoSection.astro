@@ -32,14 +32,13 @@ const is = <P extends ParsedVideo['platform']>(p: ParsedVideo | null, platform: 
 
 {
   items.length > 0 && (
-    <section aria-labelledby="videos-heading" class="mt-16">
-      <p class="eyebrow">Seen by locals</p>
-      <h2 id="videos-heading" class="mt-2 text-[2rem] md:text-[2.5rem]">
-        Videos
+    <section aria-labelledby="videos-heading" class="mt-20 md:mt-28" data-reveal>
+      <h2 id="videos-heading" class="label label-gold border-t border-line pt-5">
+        Videos by locals
       </h2>
-      <ul class="-mx-5 mt-8 flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto px-5 pb-4 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0">
+      <ul class="-mx-6 mt-8 flex snap-x snap-mandatory scroll-px-6 gap-6 overflow-x-auto px-6 pb-4 md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 lg:grid-cols-3">
         {items.map(({ entry, parsed }) => (
-          <li class="w-[72%] shrink-0 snap-start sm:w-[45%] md:w-auto">
+          <li class="w-[74%] shrink-0 snap-start sm:w-[45%] md:w-auto">
             {is(parsed, 'youtube') ? (
               <YouTubeEmbed video={parsed} creatorName={entry.creator_name} caption={entry.caption_en} spotName={spotName} />
             ) : is(parsed, 'tiktok') ? (
@@ -52,8 +51,8 @@ const is = <P extends ParsedVideo['platform']>(p: ParsedVideo | null, platform: 
           </li>
         ))}
       </ul>
-      <p class="mt-4 text-xs leading-relaxed text-ink-soft">
-        Videos are shared with their creators' permission and stay hosted on {Object.values(PLATFORM_LABELS).join(', ')}. Nothing loads from those sites until you tap play.
+      <p class="mt-6 max-w-md text-[0.8125rem] leading-[1.8] text-ink-soft">
+        Shared with each creator's permission and hosted on {Object.values(PLATFORM_LABELS).join(', ')}. Nothing loads until you tap play.
       </p>
     </section>
   )

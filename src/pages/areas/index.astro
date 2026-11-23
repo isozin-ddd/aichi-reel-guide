@@ -17,34 +17,34 @@ const crumbs = [
   description="Where to go in Aichi, Japan: area guides to Nagoya, Inuyama, Tokoname, Nagakute, Toyota and Gamagori, with local videos and tips for getting there."
   jsonLd={[breadcrumbJsonLd(crumbs, Astro.site)]}
 >
-  <div class="container-page pt-8 md:pt-12">
+  <div class="container-page page-top">
     <Breadcrumbs items={crumbs} />
-    <header class="mt-6 max-w-2xl">
-      <p class="eyebrow">Where to go</p>
-      <h1 class="mt-3 text-[3rem] md:text-[4.2rem]">Areas of Aichi</h1>
-      <p class="mt-4 text-lg leading-relaxed text-ink-soft">
-        Most visitors base themselves in Nagoya. Everything here is an easy day trip by train.
-      </p>
+    <header class="mt-16 grid gap-10 md:mt-24 md:grid-cols-[7fr_5fr] md:items-end md:gap-16">
+      <div>
+        <p class="label label-gold">Where to go</p>
+        <h1 class="display-lg mt-6 md:mt-10">Areas of Aichi</h1>
+      </div>
+      <p class="text-body max-w-sm md:pb-3">Base yourself in Nagoya. Everything here is an easy day trip by train.</p>
     </header>
-    <ul class="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="section grid gap-x-8 gap-y-16 sm:grid-cols-2 md:gap-x-12 md:gap-y-24 xl:grid-cols-3">
       {
         areas.map((a, i) => (
-          <li class="group relative">
+          <li class="group relative" data-reveal>
             <FramedImage
               src={a.data.image}
               alt={a.data.image_alt}
-              sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 92vw"
-              widths={[360, 540, 720]}
-              aspect="3 / 2"
-              loading={i < 2 ? 'eager' : 'lazy'}
+              sizes="(min-width: 1280px) 368px, (min-width: 640px) 45vw, calc(100vw - 48px)"
+              widths={[360, 480, 720, 960]}
+              aspect="4 / 5"
+              loading={i < 1 ? 'eager' : 'lazy'}
+              imgClass="transition-opacity duration-700 group-hover:opacity-90"
             />
-            <p class="mt-4 chip" lang="ja">{a.data.name_ja}</p>
-            <h2 class="mt-1 text-[2rem]">
-              <a href={`/areas/${a.id}/`} class="no-underline after:absolute after:inset-0 hover:text-gold">
+            <p class="label mt-6" lang="ja">{a.data.name_ja}</p>
+            <h2 class="mt-2 text-[1.75rem] leading-[1.15] md:text-[2rem]">
+              <a href={`/areas/${a.id}/`} class="no-underline transition-colors duration-500 after:absolute after:inset-0 group-hover:text-gold">
                 {a.data.name}
               </a>
             </h2>
-            <p class="mt-1 text-[0.95rem] text-ink-soft">{a.data.tagline}</p>
           </li>
         ))
       }

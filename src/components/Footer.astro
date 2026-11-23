@@ -1,46 +1,45 @@
 ---
 import { SITE } from '~/config/site';
 const year = new Date().getFullYear();
+const link = 'text-ink-soft no-underline transition-colors duration-500 hover:text-gold';
 ---
 
-<footer class="mt-24 border-t border-line bg-paper">
-  <div class="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr] md:py-16">
-    <div>
-      <p class="font-display text-2xl">Aichi Reel Guide</p>
-      <p class="mt-3 max-w-sm text-sm leading-relaxed text-ink-soft">
-        {SITE.tagline} An independent, free guide to Nagoya and the rest of Aichi Prefecture, Japan.
-      </p>
-    </div>
-    <nav aria-label="Footer">
-      <p class="eyebrow">Guide</p>
-      <ul class="mt-4 space-y-2.5 text-sm">
-        <li><a class="text-ink hover:text-gold" href="/spots/">All spots</a></li>
-        <li><a class="text-ink hover:text-gold" href="/areas/">Areas</a></li>
-        <li><a class="text-ink hover:text-gold" href="/categories/">Categories</a></li>
-        <li><a class="text-ink hover:text-gold" href="/map/">Map</a></li>
-      </ul>
-    </nav>
-    <div>
-      <p class="eyebrow">About</p>
-      <ul class="mt-4 space-y-2.5 text-sm">
-        <li><a class="text-ink hover:text-gold" href="/about/">About us</a></li>
-        <li><a class="text-ink hover:text-gold" href="/about/#contact">Contact</a></li>
-        <li><a class="text-ink hover:text-gold" href="/privacy/">Privacy Policy</a></li>
-        {
-          SITE.social.map((s) => (
-            <li>
-              <a class="text-ink hover:text-gold" href={s.href} rel="me noopener" target="_blank">
-                {s.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </div>
+<footer class="section">
   <div class="border-t border-line">
-    <p class="container-page py-6 text-xs text-ink-soft">
-      © {year} Aichi Reel Guide. Videos belong to their creators and are shown with permission.
-    </p>
+    <div class="container-page grid gap-12 py-16 md:grid-cols-[2fr_1fr_1fr] md:py-24">
+      <div>
+        <p class="font-display text-[1.75rem] leading-none">Aichi Reel Guide</p>
+        <p class="mt-5 max-w-xs text-[0.875rem] leading-[1.8] text-ink-soft">{SITE.tagline}</p>
+      </div>
+      <nav aria-labelledby="footer-guide">
+        <p id="footer-guide" class="label label-gold">Guide</p>
+        <ul class="mt-5 space-y-2 text-[0.875rem]">
+          <li><a class={link} href="/spots/">All spots</a></li>
+          <li><a class={link} href="/areas/">Areas</a></li>
+          <li><a class={link} href="/categories/">Categories</a></li>
+          <li><a class={link} href="/map/">Map</a></li>
+        </ul>
+      </nav>
+      <nav aria-labelledby="footer-about">
+        <p id="footer-about" class="label label-gold">About</p>
+        <ul class="mt-5 space-y-2 text-[0.875rem]">
+          <li><a class={link} href="/about/">About us</a></li>
+          <li><a class={link} href="/about/#contact">Contact</a></li>
+          <li><a class={link} href="/privacy/">Privacy Policy</a></li>
+          {
+            SITE.social.map((s) => (
+              <li>
+                <a class={link} href={s.href} rel="me noopener" target="_blank">
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+    <div class="border-t border-line">
+      <p class="container-page label py-8 !tracking-[0.2em]">© {year} Aichi Reel Guide · Videos shown with their creators' permission</p>
+    </div>
   </div>
 </footer>

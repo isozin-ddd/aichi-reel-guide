@@ -23,16 +23,16 @@ const host = safe?.hostname.replace(/^www\./, '');
       href={safe.href}
       target="_blank"
       rel="noopener noreferrer nofollow"
-      class="flex h-full min-h-40 flex-col justify-between gap-6 border border-line bg-paper p-5 no-underline transition-colors hover:border-gold"
+      class="group flex h-full min-h-48 flex-col justify-between gap-8 border border-line p-6 no-underline transition-colors duration-500 hover:border-gold"
     >
-      <span class="eyebrow">{platformLabel ?? 'Video'}</span>
+      <span class="label label-gold">{platformLabel ?? 'Video'}</span>
       <span>
-        {caption && <span class="block font-display text-xl text-ink">{caption}</span>}
-        <span class="mt-1 block text-sm text-ink-soft">by {creatorName}</span>
+        {caption && <span class="block font-display text-[1.5rem] leading-tight text-ink">{caption}</span>}
+        <span class="mt-2 block text-[0.8125rem] text-ink-soft">by {creatorName}</span>
       </span>
-      <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.12em] text-ink uppercase">
+      <span class="label inline-flex items-center gap-2 !text-ink group-hover:!text-gold">
         Watch on {platformLabel ?? host}
-        <Icon name="external-link" size={14} />
+        <Icon name="external-link" size={12} />
       </span>
     </a>
   )

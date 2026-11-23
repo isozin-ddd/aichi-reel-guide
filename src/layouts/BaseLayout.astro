@@ -1,6 +1,6 @@
 ---
-import '@fontsource/cormorant-garamond/latin-500.css';
-import '@fontsource/cormorant-garamond/latin-500-italic.css';
+import '@fontsource/cormorant-garamond/latin-300.css';
+import '@fontsource/cormorant-garamond/latin-300-italic.css';
 import '@fontsource-variable/inter/wght.css';
 import '~/styles/global.css';
 
@@ -108,6 +108,33 @@ const ogUrl = new URL(og.src, Astro.site).href;
       <slot />
     </main>
     <Footer />
+    <script>
+      // Slow fade-in for content entering the viewport. Elements already on
+      // screen at load are left alone (so nothing delays the first paint), and
+      // nothing animates for visitors who prefer reduced motion.
+      const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && 'IntersectionObserver' in window && items.length > 0) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              const el = entry.target as HTMLElement;
+              el.classList.add('reveal-in');
+              el.classList.remove('reveal-pending');
+              io.unobserve(el);
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px' },
+        );
+        for (const el of items) {
+          if (el.getBoundingClientRect().top > window.innerHeight) {
+            el.classList.add('reveal-pending');
+            io.observe(el);
+          }
+        }
+      }
+    </script>
     {
       ANALYTICS_TOKEN && (
         <script

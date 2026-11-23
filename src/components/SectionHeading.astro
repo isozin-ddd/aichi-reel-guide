@@ -1,7 +1,11 @@
 ---
+/**
+ * Section opener: a hairline rule carrying a small label (and optional link),
+ * followed by a large, light serif title.
+ */
 interface Props {
-  eyebrow?: string;
-  title: string;
+  eyebrow: string;
+  title?: string;
   id?: string;
   href?: string;
   linkLabel?: string;
@@ -9,16 +13,16 @@ interface Props {
 const { eyebrow, title, id, href, linkLabel } = Astro.props;
 ---
 
-<div class="mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-10">
-  <div>
-    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    <h2 id={id} class="mt-2 text-[2.1rem] md:text-[2.8rem]">{title}</h2>
+<div class="mb-12 md:mb-20" data-reveal>
+  <div class="flex items-baseline justify-between gap-6 border-t border-line pt-5">
+    <p class="label label-gold" id={title ? undefined : id}>{eyebrow}</p>
+    {
+      href && (
+        <a href={href} class="label no-underline transition-colors duration-500 hover:text-gold">
+          {linkLabel ?? 'View all'}
+        </a>
+      )
+    }
   </div>
-  {
-    href && (
-      <a href={href} class="text-xs font-semibold tracking-[0.14em] text-ink uppercase hover:text-gold">
-        {linkLabel ?? 'View all'} <span aria-hidden="true">→</span>
-      </a>
-    )
-  }
+  {title && <h2 id={id} class="display-md mt-8 md:mt-12">{title}</h2>}
 </div>

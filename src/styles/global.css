@@ -1,22 +1,30 @@
 @import 'tailwindcss';
 
+/*
+ * Palette: ivory, charcoal, gold — plus one hairline grey for rules.
+ * No shadows, no gradients.
+ */
 @theme {
+  --color-*: initial;
   --color-ivory: #f7f4ec;
-  --color-paper: #fcfaf5;
-  --color-sand: #ece5d6;
-  --color-line: #ddd5c3;
   --color-ink: #2b2a27;
-  --color-ink-soft: #57534b;
-  --color-gold: #8a6a2c;
-  --color-gold-soft: #c9ad74;
-  --color-olive: #545a32;
-  --color-olive-soft: #e5e6d6;
-  --color-alert: #8f3b22;
+  --color-ink-soft: #5c5850;
+  --color-gold: #866728;
+  --color-line: #dedad1;
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
 
   --font-serif: 'Cormorant Garamond', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
   --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --radius-soft: 2px;
+  --shadow-*: initial;
+  --radius-soft: 0;
+
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
 }
 
 @layer base {
@@ -39,7 +47,8 @@
     background: var(--color-ivory);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-feature-settings: 'cv11', 'ss01';
+    font-size: 0.9375rem;
+    line-height: 1.8;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -48,109 +57,195 @@
   h3,
   .font-display {
     font-family: var(--font-serif);
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    line-height: 1.08;
+    font-weight: 300;
+    letter-spacing: -0.005em;
+    line-height: 1.1;
   }
   ::selection {
-    background: var(--color-gold-soft);
-    color: var(--color-ink);
+    background: var(--color-ink);
+    color: var(--color-ivory);
   }
   :focus-visible {
-    outline: 2px solid var(--color-gold);
-    outline-offset: 3px;
+    outline: 1px solid var(--color-gold);
+    outline-offset: 4px;
   }
   a {
-    text-underline-offset: 0.2em;
+    text-underline-offset: 0.25em;
     text-decoration-thickness: 1px;
+  }
+  input,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
   }
 }
 
 @layer components {
   .container-page {
     width: 100%;
-    max-width: 76rem;
+    max-width: 80rem;
     margin-inline: auto;
-    padding-inline: 1.25rem;
+    padding-inline: 1.5rem;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     .container-page {
-      padding-inline: 2.5rem;
+      padding-inline: 3rem;
     }
   }
-  .eyebrow {
+
+  /* Vertical rhythm: at least 96px between sections on phones, 160px on desktop. */
+  .section {
+    padding-top: 6rem;
+  }
+  @media (min-width: 48rem) {
+    .section {
+      padding-top: 10rem;
+    }
+  }
+  .page-top {
+    padding-top: 2.5rem;
+  }
+  @media (min-width: 48rem) {
+    .page-top {
+      padding-top: 4rem;
+    }
+  }
+
+  /* One style for every small label: small caps, wide tracking. */
+  .label {
     font-family: var(--font-sans);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+  .label-gold {
     color: var(--color-gold);
   }
+
+  .display-xl {
+    font-size: clamp(3.25rem, 9vw, 7.5rem);
+    line-height: 1;
+  }
+  .display-lg {
+    font-size: clamp(2.75rem, 7vw, 5.5rem);
+    line-height: 1.02;
+  }
+  .display-md {
+    font-size: clamp(2.125rem, 4.5vw, 3.75rem);
+  }
+  .display-sm {
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+    line-height: 1.2;
+  }
+
+  .text-body {
+    font-size: 0.9375rem;
+    line-height: 1.8;
+    color: var(--color-ink-soft);
+  }
+  .prose-guide {
+    font-size: 0.9375rem;
+    line-height: 1.8;
+    color: var(--color-ink);
+  }
+  .prose-guide p + p {
+    margin-top: 1.4em;
+  }
+  @media (min-width: 48rem) {
+    .prose-guide {
+      font-size: 1rem;
+    }
+  }
+
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    min-height: 3rem;
-    padding: 0.75rem 1.5rem;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0.75rem 2rem;
     border: 1px solid var(--color-ink);
-    border-radius: var(--radius-soft);
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     text-decoration: none;
     transition:
-      background-color 0.2s,
-      color 0.2s,
-      border-color 0.2s;
+      background-color 0.4s,
+      color 0.4s,
+      border-color 0.4s;
   }
   .btn-primary {
     background: var(--color-ink);
-    color: var(--color-paper);
+    color: var(--color-ivory);
   }
   .btn-primary:hover {
-    background: var(--color-olive);
-    border-color: var(--color-olive);
+    background: var(--color-gold);
+    border-color: var(--color-gold);
   }
   .btn-ghost {
     background: transparent;
     color: var(--color-ink);
   }
   .btn-ghost:hover {
-    background: var(--color-ink);
-    color: var(--color-paper);
+    border-color: var(--color-gold);
+    color: var(--color-gold);
   }
-  .prose-guide p + p {
-    margin-top: 1.1em;
+
+  /* Text link with a hairline that darkens on hover. */
+  .link-quiet {
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: 0.15em;
+    transition:
+      border-color 0.4s,
+      color 0.4s;
   }
-  .prose-guide {
-    font-size: 1.0625rem;
-    line-height: 1.8;
-    color: var(--color-ink);
+  .link-quiet:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
   }
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-ink-soft);
-  }
-  .rule {
+
+  /* Underlined form controls. */
+  .field {
+    height: 3rem;
+    width: 100%;
     border: 0;
-    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    border-radius: 0;
+    background: transparent;
+    padding: 0 0.25rem;
+    font-size: 0.9375rem;
+    appearance: none;
+    transition: border-color 0.4s;
+  }
+  .field:focus {
+    outline: none;
+    border-bottom-color: var(--color-ink);
+  }
+  .field:focus-visible {
+    outline: 1px solid var(--color-gold);
+    outline-offset: 4px;
+  }
+  select.field {
+    background-image: none;
+    cursor: pointer;
   }
 
   /* Image wrapper with a graceful fallback when the image can't load. */
   .img-frame {
     position: relative;
     overflow: hidden;
-    background:
-      repeating-linear-gradient(135deg, transparent 0 14px, rgb(0 0 0 / 0.025) 14px 15px),
-      var(--color-sand);
+    background: var(--color-line);
   }
   .img-frame > img {
     display: block;
@@ -164,7 +259,7 @@
     display: none;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 1.5rem;
     text-align: center;
     font-family: var(--font-serif);
     font-size: 1.1rem;
@@ -175,5 +270,30 @@
   }
   .img-frame.is-broken .img-fallback {
     display: flex;
+  }
+
+  /* Slow fade-in on scroll. Only applied by JS to elements below the fold,
+     and never when the visitor prefers reduced motion. */
+  .reveal-pending {
+    opacity: 0;
+  }
+  .reveal-in {
+    opacity: 1;
+    transition: opacity 1.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+}
+
+@layer components {
+  .prose-legal h2 {
+    margin: 4rem 0 1.25rem;
+    border-top: 1px solid var(--color-line);
+    padding-top: 1.25rem;
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
   }
 }

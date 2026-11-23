@@ -3,7 +3,6 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import SpotGrid from '~/components/SpotGrid.astro';
 import EmptyState from '~/components/EmptyState.astro';
-import Icon from '~/components/Icon.astro';
 import { getAreas, getCategories, getPublishedSpots } from '~/lib/content';
 import { breadcrumbJsonLd } from '~/lib/seo';
 
@@ -12,8 +11,6 @@ const crumbs = [
   { label: 'Home', href: '/' },
   { label: 'Spots', href: '/spots/' },
 ];
-const selectClass =
-  'h-12 w-full appearance-none rounded-[2px] border border-line bg-paper px-4 pr-10 text-[0.95rem] text-ink focus:border-gold';
 ---
 
 <BaseLayout
@@ -21,71 +18,58 @@ const selectClass =
   description="Browse every spot in the Aichi Reel Guide: cafes, castles, shrines, pottery classes, markets and nature in Nagoya and across Aichi — each with local videos and practical tips."
   jsonLd={[breadcrumbJsonLd(crumbs, Astro.site)]}
 >
-  <div class="container-page pt-8 md:pt-12">
+  <div class="container-page page-top">
     <Breadcrumbs items={crumbs} />
-    <header class="mt-6 max-w-2xl">
-      <p class="eyebrow">The guide</p>
-      <h1 class="mt-3 text-[3rem] md:text-[4.2rem]">All spots</h1>
-      <p class="mt-4 text-lg leading-relaxed text-ink-soft">
-        Search by name or mood, or narrow things down by area and category.
-      </p>
+    <header class="mt-16 max-w-3xl md:mt-24">
+      <p class="label label-gold">The guide</p>
+      <h1 class="display-lg mt-6 md:mt-10">All spots</h1>
     </header>
 
     <form
       id="spot-filters"
-      class="mt-10 grid gap-3 border-y border-line py-5 md:grid-cols-[1.6fr_1fr_1fr_auto] md:items-end"
+      class="mt-16 grid gap-8 md:mt-24 md:grid-cols-[1.6fr_1fr_1fr_auto] md:items-end md:gap-10"
       role="search"
       action="/spots/"
       method="get"
     >
       <div>
-        <label for="q" class="eyebrow mb-2 block !text-ink-soft">Search</label>
-        <div class="relative">
-          <Icon name="search" size={18} class="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-ink-soft" />
-          <input
-            id="q"
-            name="q"
-            type="search"
-            autocomplete="off"
-            placeholder="Try “coffee”, “castle”, “pottery”…"
-            class="h-12 w-full rounded-[2px] border border-line bg-paper pr-4 pl-11 text-[0.95rem] text-ink placeholder:text-ink-soft/80 focus:border-gold"
-          />
-        </div>
+        <label for="q" class="label block">Search</label>
+        <input id="q" name="q" type="search" autocomplete="off" placeholder="Coffee, castle, pottery…" class="field placeholder:text-ink-soft" />
       </div>
       <div>
-        <label for="area" class="eyebrow mb-2 block !text-ink-soft">Area</label>
-        <select id="area" name="area" class={selectClass}>
+        <label for="area" class="label block">Area</label>
+        <select id="area" name="area" class="field">
           <option value="">All areas</option>
           {areas.map((a) => <option value={a.id}>{a.data.name}</option>)}
         </select>
       </div>
       <div>
-        <label for="category" class="eyebrow mb-2 block !text-ink-soft">Category</label>
-        <select id="category" name="category" class={selectClass}>
+        <label for="category" class="label block">Category</label>
+        <select id="category" name="category" class="field">
           <option value="">All categories</option>
           {categories.map((c) => <option value={c.id}>{c.data.name}</option>)}
         </select>
       </div>
-      <button type="reset" class="btn btn-ghost h-12 min-h-0">Reset</button>
+      <button type="reset" class="label link-quiet justify-self-start pb-3 !text-ink md:justify-self-end">Reset</button>
     </form>
 
-    <p id="result-count" class="mt-6 text-sm text-ink-soft" aria-live="polite">
+    <p id="result-count" class="label mt-12 border-t border-line pt-5 md:mt-16" aria-live="polite">
       {spots.length === 1 ? '1 spot' : `${spots.length} spots`}
     </p>
 
-    <section class="mt-8" aria-label="Spot results">
+    <section class="mt-12 md:mt-20" aria-label="Spot results">
       {
         spots.length > 0 ? (
-          <SpotGrid spots={spots} headingLevel="h2" eagerCount={2} />
+          <SpotGrid spots={spots} headingLevel="h2" eagerCount={1} />
         ) : (
           <EmptyState title="New spots are on the way">
-            We're filming with local creators right now. Check back soon, or start with our{' '}
-            <a href="/areas/" class="text-ink underline">area guides</a>.
+            We're filming with local creators now. Start with the{' '}
+            <a href="/areas/" class="link-quiet text-ink">area guides</a>.
           </EmptyState>
         )
       }
-      <EmptyState id="no-results" title="No spots match" hidden>
-        Try a different word, or <button type="button" class="text-ink underline" data-clear>clear all filters</button>.
+      <EmptyState id="no-results" title="Nothing matches" hidden>
+        Try another word, or <button type="button" class="link-quiet text-ink" data-clear>clear the filters</button>.
       </EmptyState>
     </section>
   </div>

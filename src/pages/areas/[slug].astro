@@ -5,7 +5,7 @@ import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import FramedImage from '~/components/FramedImage.astro';
 import SpotGrid from '~/components/SpotGrid.astro';
 import EmptyState from '~/components/EmptyState.astro';
-import Icon from '~/components/Icon.astro';
+import SectionHeading from '~/components/SectionHeading.astro';
 import { getAreas, getPublishedSpots, type Area } from '~/lib/content';
 import { absoluteUrl, breadcrumbJsonLd } from '~/lib/seo';
 
@@ -47,65 +47,62 @@ const jsonLd = [
   ogImageAlt={a.image_alt}
   jsonLd={jsonLd}
 >
-  <div class="container-page pt-8 md:pt-12">
+  <div class="container-page page-top">
     <Breadcrumbs items={crumbs} />
-    <header class="mt-6 grid gap-10 md:mt-10 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-14">
-      <div>
-        <p class="eyebrow">Area guide · <span lang="ja">{a.name_ja}</span></p>
-        <h1 class="mt-3 text-[3.2rem] md:text-[4.8rem]">{a.name}</h1>
-        <p class="mt-3 font-display text-[1.5rem] leading-snug text-ink-soft italic">{a.tagline}</p>
+    <header class="mt-16 grid gap-12 md:mt-24 md:grid-cols-[5fr_7fr] md:items-end md:gap-16">
+      <div class="md:pb-4">
+        <p class="label label-gold">Area guide · <span lang="ja">{a.name_ja}</span></p>
+        <h1 class="display-xl mt-6 md:mt-10">{a.name}</h1>
+        <p class="text-body mt-6 md:mt-10">{a.tagline}</p>
       </div>
       <figure>
         <FramedImage
           src={a.image}
           alt={a.image_alt}
-          sizes="(min-width: 768px) 52vw, 100vw"
+          sizes="(min-width: 1280px) 680px, (min-width: 768px) 55vw, calc(100vw - 48px)"
           widths={[480, 720, 960, 1280]}
-          aspect="3 / 2"
+          class="aspect-[4/5] md:aspect-[5/4]"
           loading="eager"
           fetchpriority="high"
         />
-        <figcaption class="mt-2 text-right text-xs text-ink-soft">{a.image_credit}</figcaption>
+        <figcaption class="label mt-4 text-right">{a.image_credit}</figcaption>
       </figure>
     </header>
 
-    <div class="mt-12 grid gap-10 md:grid-cols-[1.6fr_1fr] md:gap-16">
-      <div class="prose-guide">
+    <div class="section grid gap-16 md:grid-cols-[7fr_4fr] md:gap-24">
+      <div class="prose-guide max-w-xl" data-reveal>
         {a.intro_en.map((p) => <p>{p}</p>)}
       </div>
       {
         a.getting_there_en && (
-          <aside class="self-start border-l-2 border-gold-soft pl-5">
-            <p class="eyebrow flex items-center gap-2">
-              <Icon name="train" size={15} /> Getting there
-            </p>
-            <p class="mt-3 text-[0.95rem] leading-relaxed text-ink-soft">{a.getting_there_en}</p>
+          <aside class="self-start" data-reveal>
+            <h2 class="label label-gold border-t border-line pt-5">Getting there</h2>
+            <p class="text-body mt-6">{a.getting_there_en}</p>
           </aside>
         )
       }
     </div>
 
-    <section class="mt-20" aria-labelledby="spots-heading">
-      <h2 id="spots-heading" class="mb-10 text-[2.1rem] md:text-[2.7rem]">Spots in {a.name}</h2>
+    <section class="section" aria-labelledby="spots-heading">
+      <SectionHeading eyebrow="Where to go" title={`Spots in ${a.name}`} id="spots-heading" />
       {
         spots.length > 0 ? (
           <SpotGrid spots={spots} />
         ) : (
           <EmptyState title={`${a.name} spots coming soon`}>
-            We're working with local creators to film {a.name}. Meanwhile, see{' '}
-            <a href="/spots/" class="text-ink underline">all spots</a>.
+            We're filming {a.name} with local creators. Meanwhile, see <a href="/spots/" class="link-quiet text-ink">all spots</a>.
           </EmptyState>
         )
       }
     </section>
 
-    <nav class="mt-20 border-t border-line pt-10" aria-labelledby="other-areas">
-      <h2 id="other-areas" class="eyebrow">Other areas</h2>
-      <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-3">
+    <nav class="section" aria-labelledby="other-areas">
+      <SectionHeading eyebrow="Other areas" id="other-areas" />
+      <ul class="flex flex-wrap gap-x-10 gap-y-4">
         {
           others.map((o) => (
             <li>
-              <a href={`/areas/${o.id}/`} class="font-display text-[1.5rem] text-ink no-underline hover:text-gold">
+              <a href={`/areas/${o.id}/`} class="font-display text-[1.75rem] text-ink no-underline transition-colors duration-500 hover:text-gold md:text-[2.25rem]">
                 {o.data.name}
               </a>
             </li>

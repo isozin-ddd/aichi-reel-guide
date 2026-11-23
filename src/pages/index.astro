@@ -4,7 +4,6 @@ import FramedImage from '~/components/FramedImage.astro';
 import SectionHeading from '~/components/SectionHeading.astro';
 import SpotGrid from '~/components/SpotGrid.astro';
 import EmptyState from '~/components/EmptyState.astro';
-import Icon from '~/components/Icon.astro';
 import hero from '~/assets/site/hero.jpg';
 import { getAreas, getCategories, getPublishedSpots } from '~/lib/content';
 import { SITE } from '~/config/site';
@@ -12,7 +11,7 @@ import { absoluteUrl } from '~/lib/seo';
 
 const [spots, areas, categories] = await Promise.all([getPublishedSpots(), getAreas(), getCategories()]);
 const featured = spots.filter((s) => s.data.featured).slice(0, 6);
-const countBy = (key: 'area' | 'category', id: string) => spots.filter((s) => s.data[key].id === id).length;
+const pad = (n: number) => String(n).padStart(2, '0');
 
 const jsonLd = [
   {
@@ -33,117 +32,101 @@ const jsonLd = [
   jsonLd={jsonLd}
 >
   <!-- Hero -->
-  <section class="container-page grid items-center gap-10 pt-10 pb-16 md:grid-cols-[1fr_1.15fr] md:gap-14 md:pt-16 md:pb-24">
-    <div class="md:pr-4">
-      <p class="eyebrow">Aichi, Japan · Travel guide</p>
-      <h1 class="mt-4 text-[3.4rem] md:text-[5.4rem]">Discover Aichi</h1>
-      <p class="mt-5 max-w-md text-lg leading-relaxed text-ink-soft" data-hero-lede>
+  <section class="container-page page-top grid gap-12 md:grid-cols-[5fr_7fr] md:items-end md:gap-16">
+    <div class="md:pb-4">
+      <p class="label label-gold">Aichi, Japan</p>
+      <h1 class="display-xl mt-6 md:mt-10">Discover<br class="hidden md:block" /> Aichi</h1>
+      <p class="text-body mt-6 max-w-sm md:mt-10" data-hero-lede>
         Short local videos and practical tips for exploring Nagoya and beyond.
       </p>
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-        <a href="/spots/" class="btn btn-primary w-full sm:w-auto">Explore Spots <Icon name="arrow-right" size={16} /></a>
-        <a href="/map/" class="btn btn-ghost w-full sm:w-auto">Explore Map <Icon name="map" size={16} /></a>
+      <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-12">
+        <a href="/spots/" class="btn btn-primary w-full sm:w-auto">Explore Spots</a>
+        <a href="/map/" class="btn btn-ghost w-full sm:w-auto">Explore Map</a>
       </div>
     </div>
     <FramedImage
       src={hero}
       alt="Illustration of a castle above green hills and a calm bay under a golden sun"
-      sizes="(min-width: 768px) 55vw, 100vw"
+      sizes="(min-width: 1280px) 680px, (min-width: 768px) 55vw, calc(100vw - 48px)"
       widths={[480, 720, 960, 1280, 1600]}
-      aspect="3 / 2"
+      class="aspect-square md:aspect-[5/4]"
       loading="eager"
       fetchpriority="high"
     />
   </section>
 
-  <!-- Categories -->
-  <section class="border-y border-line bg-paper py-16 md:py-20" aria-labelledby="categories-heading">
-    <div class="container-page">
-      <SectionHeading eyebrow="What are you into?" title="Browse by category" id="categories-heading" />
-      <ul class="grid grid-cols-2 gap-px border border-line bg-line md:grid-cols-3">
-        {
-          categories.map((c) => (
-            <li class="bg-paper">
-              <a
-                href={`/categories/${c.id}/`}
-                class="group flex h-full flex-col gap-3 p-5 no-underline transition-colors hover:bg-ivory md:p-8"
-              >
-                <Icon name={c.data.icon} size={26} class="text-gold" />
-                <span class="font-display text-[1.45rem] leading-tight text-ink md:text-[1.8rem]">{c.data.name}</span>
-                <span class="hidden text-sm leading-relaxed text-ink-soft sm:block">{c.data.short_description}</span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
-
   <!-- Featured -->
-  <section class="container-page py-16 md:py-24" aria-labelledby="featured-heading">
+  <section class="container-page section" aria-labelledby="featured-heading">
     <SectionHeading eyebrow="Editor's picks" title="Featured spots" id="featured-heading" href="/spots/" linkLabel="All spots" />
     {
       featured.length > 0 ? (
         <SpotGrid spots={featured} />
       ) : (
         <EmptyState title="New spots are on the way">
-          We're filming with local creators right now. In the meantime, explore the areas below to start planning.
+          We're filming with local creators now. Start planning with the areas below.
         </EmptyState>
       )
     }
   </section>
 
-  <!-- Areas -->
-  <section class="border-t border-line bg-paper py-16 md:py-24" aria-labelledby="areas-heading">
-    <div class="container-page">
-      <SectionHeading eyebrow="Where to go" title="Explore by area" id="areas-heading" href="/areas/" linkLabel="All areas" />
-      <ul class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          areas.map((a) => {
-            const n = countBy('area', a.id);
-            return (
-              <li class="group relative">
-                <FramedImage
-                  src={a.data.image}
-                  alt={a.data.image_alt}
-                  sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 92vw"
-                  widths={[360, 540, 720]}
-                  aspect="3 / 2"
-                />
-                <p class="mt-4 chip">
-                  <span lang="ja">{a.data.name_ja}</span>
-                  {n > 0 && (
-                    <>
-                      <span aria-hidden="true" class="text-gold-soft">·</span>
-                      <span>{n === 1 ? '1 spot' : `${n} spots`}</span>
-                    </>
-                  )}
-                </p>
-                <h3 class="mt-1 text-[1.8rem]">
-                  <a href={`/areas/${a.id}/`} class="no-underline after:absolute after:inset-0 hover:text-gold">
-                    {a.data.name}
-                  </a>
-                </h3>
-                <p class="mt-1 text-[0.95rem] text-ink-soft">{a.data.tagline}</p>
-              </li>
-            );
-          })
-        }
-      </ul>
-    </div>
+  <!-- Categories -->
+  <section class="container-page section" aria-labelledby="categories-heading">
+    <SectionHeading eyebrow="Browse by" title="Category" id="categories-heading" />
+    <ul class="grid border-t border-line sm:grid-cols-2 lg:grid-cols-3">
+      {
+        categories.map((c, i) => (
+          <li class="border-b border-line sm:odd:border-r lg:border-r lg:[&:nth-child(3n)]:border-r-0" data-reveal>
+            <a
+              href={`/categories/${c.id}/`}
+              class="group flex items-baseline gap-5 px-1 py-7 no-underline sm:px-8 md:py-12"
+            >
+              <span class="label label-gold">{pad(i + 1)}</span>
+              <span class="font-display text-[1.75rem] leading-tight transition-colors duration-500 group-hover:text-gold md:text-[2.25rem]">
+                {c.data.name}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 
-  <!-- About strip -->
-  <section class="container-page py-16 md:py-24">
-    <div class="grid gap-8 border-t border-line pt-12 md:grid-cols-[1fr_1.4fr] md:gap-16">
-      <h2 class="text-[2.2rem] md:text-[2.8rem]">Why videos?</h2>
-      <div class="prose-guide text-ink-soft">
-        <p>
-          A fifteen-second clip tells you more about a place than a page of adjectives: how busy it gets, what the food
-          really looks like, whether it's your kind of spot. We work with local creators who know Aichi well, and only
-          feature videos they've given us permission to share.
+  <!-- Areas -->
+  <section class="container-page section" aria-labelledby="areas-heading">
+    <SectionHeading eyebrow="Where to go" title="Areas" id="areas-heading" href="/areas/" linkLabel="All areas" />
+    <ul class="border-t border-line">
+      {
+        areas.map((a) => (
+          <li class="border-b border-line" data-reveal>
+            <a
+              href={`/areas/${a.id}/`}
+              class="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 py-7 no-underline md:grid-cols-[1fr_1.4fr_auto] md:py-10"
+            >
+              <span class="font-display text-[2rem] leading-none transition-colors duration-500 group-hover:text-gold md:text-[3rem]">
+                {a.data.name}
+              </span>
+              <span class="text-body hidden md:col-start-2 md:row-start-1 md:block">{a.data.tagline}</span>
+              <span class="label" lang="ja">
+                {a.data.name_ja}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- Why videos -->
+  <section class="container-page section" aria-labelledby="why-heading">
+    <SectionHeading eyebrow="About the guide" />
+    <div class="grid gap-10 md:grid-cols-[5fr_7fr] md:gap-16" data-reveal>
+      <h2 id="why-heading" class="display-md">Why videos?</h2>
+      <div class="max-w-lg">
+        <p class="text-body">
+          Fifteen seconds of video says more than a page of adjectives. We work with local creators and only share
+          clips they've given us permission to feature.
         </p>
-        <p><a href="/about/" class="text-ink hover:text-gold">More about the guide →</a></p>
+        <p class="mt-8"><a href="/about/" class="label link-quiet !text-ink">More about the guide</a></p>
       </div>
     </div>
   </section>

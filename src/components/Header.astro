@@ -5,29 +5,29 @@ const nav = [
   { href: '/map/', label: 'Map' },
   { href: '/about/', label: 'About' },
 ];
-const isActive = (href: string) => path === href || path.startsWith(href) || path === href.slice(0, -1);
+const isActive = (href: string) => path.startsWith(href) || path === href.slice(0, -1);
 ---
 
 <a
   href="#main"
-  class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[1000] focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+  class="label sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[1000] focus:bg-ink focus:px-4 focus:py-2 focus:text-ivory"
   >Skip to content</a
 >
-<header class="border-b border-line bg-ivory/95">
-  <div class="container-page flex h-16 items-center justify-between gap-4 md:h-20">
-    <a href="/" class="group flex items-baseline gap-2 no-underline" aria-label="Aichi Reel Guide — home">
-      <span class="font-display text-[1.45rem] leading-none text-ink md:text-[1.7rem]">Aichi Reel Guide</span>
+<header class="border-b border-line">
+  <div class="container-page flex h-16 items-center justify-between gap-6 md:h-24">
+    <a href="/" class="font-display text-[1.4rem] leading-none text-ink no-underline md:text-[1.75rem]" aria-label="Aichi Reel Guide — home">
+      Aichi Reel Guide
     </a>
     <nav aria-label="Main">
-      <ul class="flex items-center gap-5 text-[0.78rem] font-semibold tracking-[0.14em] uppercase md:gap-9">
+      <ul class="flex items-center gap-5 md:gap-12">
         {
           nav.map((item) => (
             <li>
               <a
                 href={item.href}
                 class:list={[
-                  'border-b py-1 no-underline transition-colors hover:text-gold',
-                  isActive(item.href) ? 'border-gold text-ink' : 'border-transparent text-ink-soft',
+                  'label border-b pb-1 no-underline transition-colors duration-500 hover:text-gold',
+                  isActive(item.href) ? 'border-ink !text-ink' : 'border-transparent',
                 ]}
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import SectionHeading from '~/components/SectionHeading.astro';
 import { getLookups, getPublishedSpots } from '~/lib/content';
 import { MAP_TILES } from '~/config/site';
 import { breadcrumbJsonLd } from '~/lib/seo';
@@ -26,8 +27,6 @@ const crumbs = [
   { label: 'Home', href: '/' },
   { label: 'Map', href: '/map/' },
 ];
-const selectClass =
-  'h-11 w-full appearance-none rounded-[2px] border border-line bg-paper px-3 text-[0.9rem] text-ink focus:border-gold';
 ---
 
 <BaseLayout
@@ -35,24 +34,24 @@ const selectClass =
   description="An interactive map of every spot in the Aichi Reel Guide. Filter by area and category, then tap a pin for local videos and travel tips."
   jsonLd={[breadcrumbJsonLd(crumbs, Astro.site)]}
 >
-  <div class="container-page pt-8 md:pt-12">
+  <div class="container-page page-top">
     <Breadcrumbs items={crumbs} />
-    <header class="mt-6 flex flex-wrap items-end justify-between gap-6">
+    <header class="mt-16 grid gap-10 md:mt-24 md:grid-cols-[1fr_auto] md:items-end md:gap-16">
       <div>
-        <p class="eyebrow">Plan your days</p>
-        <h1 class="mt-3 text-[3rem] md:text-[4.2rem]">Map</h1>
+        <p class="label label-gold">Plan your days</p>
+        <h1 class="display-lg mt-6 md:mt-10">Map</h1>
       </div>
-      <form id="map-filters" class="grid w-full grid-cols-2 gap-3 md:w-auto md:min-w-[28rem]" aria-label="Filter map">
+      <form id="map-filters" class="grid grid-cols-2 gap-6 md:min-w-[28rem] md:gap-10" aria-label="Filter map">
         <div>
-          <label for="map-area" class="eyebrow mb-1.5 block !text-ink-soft">Area</label>
-          <select id="map-area" class={selectClass}>
+          <label for="map-area" class="label block">Area</label>
+          <select id="map-area" class="field">
             <option value="">All areas</option>
             {areas.map((a) => <option value={a.id}>{a.data.name}</option>)}
           </select>
         </div>
         <div>
-          <label for="map-category" class="eyebrow mb-1.5 block !text-ink-soft">Category</label>
-          <select id="map-category" class={selectClass}>
+          <label for="map-category" class="label block">Category</label>
+          <select id="map-category" class="field">
             <option value="">All categories</option>
             {categories.map((c) => <option value={c.id}>{c.data.name}</option>)}
           </select>
@@ -60,10 +59,10 @@ const selectClass =
       </form>
     </header>
 
-    <div class="relative mt-8">
+    <div class="mt-16 md:mt-24">
       <div
         id="map"
-        class="h-[68vh] min-h-[420px] w-full border border-line bg-sand"
+        class="h-[70vh] min-h-[440px] w-full border border-line bg-line"
         data-tile-url={MAP_TILES.url}
         data-tile-attribution={MAP_TILES.attribution}
         data-tile-max-zoom={MAP_TILES.maxZoom}
@@ -71,29 +70,29 @@ const selectClass =
         aria-label="Map of spots in Aichi"
       >
         <noscript>
-          <p class="p-6 text-sm text-ink-soft">The map needs JavaScript. Every spot is listed below.</p>
+          <p class="p-6 text-[0.875rem] text-ink-soft">The map needs JavaScript. Every spot is listed below.</p>
         </noscript>
       </div>
-      <p id="map-count" class="mt-3 text-sm text-ink-soft" aria-live="polite">
+      <p id="map-count" class="label mt-5" aria-live="polite">
         {points.length === 1 ? '1 spot' : `${points.length} spots`} on the map
       </p>
     </div>
 
-    <section class="mt-14" aria-labelledby="list-heading">
-      <h2 id="list-heading" class="text-[1.9rem]">All spots on the map</h2>
+    <section class="section" aria-labelledby="list-heading">
+      <SectionHeading eyebrow="Index" title="Every spot" id="list-heading" />
       {
         points.length === 0 ? (
-          <p class="mt-4 text-ink-soft">
-            No spots yet — they're on the way. Explore the <a href="/areas/" class="text-ink underline">area guides</a> meanwhile.
+          <p class="text-body">
+            No spots yet — they're on the way. Explore the <a href="/areas/" class="link-quiet text-ink">area guides</a> meanwhile.
           </p>
         ) : (
-          <ul class="mt-6 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3" id="map-list">
+          <ul class="grid gap-x-12 border-t border-line sm:grid-cols-2 lg:grid-cols-3" id="map-list">
             {points.map((p) => (
-              <li class="border-b border-line py-3" data-area={p.area} data-category={p.category}>
-                <a href={`/spots/${p.slug}/`} class="font-display text-[1.3rem] text-ink no-underline hover:text-gold">
+              <li class="border-b border-line py-5" data-area={p.area} data-category={p.category}>
+                <a href={`/spots/${p.slug}/`} class="font-display text-[1.5rem] leading-tight text-ink no-underline transition-colors duration-500 hover:text-gold">
                   {p.name}
                 </a>
-                <span class="block text-xs tracking-wide text-ink-soft">
+                <span class="label mt-1 block">
                   {p.areaName} · {p.categoryName}
                 </span>
               </li>
@@ -109,36 +108,48 @@ const selectClass =
 
 <style is:global>
   .arg-pin {
-    width: 30px;
-    height: 30px;
+    position: relative;
+    width: 26px;
+    height: 26px;
     border-radius: 50% 50% 50% 0;
     background: var(--color-ink);
-    border: 2px solid var(--color-paper);
+    border: 1px solid var(--color-ivory);
     transform: rotate(-45deg);
-    box-shadow: 0 2px 6px rgb(0 0 0 / 0.25);
   }
   .arg-pin::after {
     content: '';
     position: absolute;
     inset: 8px;
     border-radius: 50%;
-    background: var(--color-gold-soft);
+    background: var(--color-gold);
   }
   .leaflet-container {
     font-family: var(--font-sans);
-    background: var(--color-sand);
+    background: var(--color-line);
   }
-  .leaflet-popup-content-wrapper {
-    border-radius: 2px;
-    background: var(--color-paper);
+  .leaflet-popup-content-wrapper,
+  .leaflet-popup-tip {
+    border-radius: 0;
+    background: var(--color-ivory);
     color: var(--color-ink);
+    box-shadow: none;
+    border: 1px solid var(--color-line);
   }
   .leaflet-popup-content {
-    margin: 16px 18px;
-    min-width: 200px;
+    margin: 20px 22px;
+    min-width: 210px;
+    line-height: 1.6;
+  }
+  .leaflet-bar,
+  .leaflet-bar a {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .leaflet-touch .leaflet-bar {
+    border: 1px solid var(--color-line);
   }
   .leaflet-container a.arg-popup-link {
-    color: var(--color-paper);
+    color: var(--color-ink);
   }
 </style>
 
@@ -169,18 +180,18 @@ const selectClass =
   function popupContent(p: Point): HTMLElement {
     const root = document.createElement('div');
     const meta = document.createElement('p');
-    meta.className = 'text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-ink-soft !m-0';
+    meta.className = 'label !m-0';
     meta.textContent = [p.areaName, p.categoryName, p.price].filter(Boolean).join(' · ');
     const title = document.createElement('p');
-    title.className = 'font-display text-[1.35rem] leading-tight !mt-1 !mb-0';
+    title.className = 'font-display text-[1.5rem] leading-tight !mt-2 !mb-0';
     title.textContent = p.name;
     const summary = document.createElement('p');
-    summary.className = 'text-[0.85rem] leading-snug text-ink-soft !mt-2 !mb-3';
+    summary.className = 'text-[0.8125rem] leading-[1.7] text-ink-soft !mt-3 !mb-4';
     summary.textContent = p.summary;
     const link = document.createElement('a');
     link.href = `/spots/${encodeURIComponent(p.slug)}/`;
-    link.className = 'arg-popup-link inline-block bg-ink px-3 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.12em] no-underline';
-    link.textContent = 'View details →';
+    link.className = 'arg-popup-link label link-quiet';
+    link.textContent = 'View details';
     root.append(meta, title, summary, link);
     return root;
   }
@@ -196,7 +207,7 @@ const selectClass =
       map.on('focus', () => map.scrollWheelZoom.enable());
       map.on('blur', () => map.scrollWheelZoom.disable());
 
-      const icon = L.divIcon({ className: '', html: '<div class="arg-pin"></div>', iconSize: [30, 30], iconAnchor: [15, 30], popupAnchor: [0, -30] });
+      const icon = L.divIcon({ className: '', html: '<div class="arg-pin"></div>', iconSize: [26, 26], iconAnchor: [13, 26], popupAnchor: [0, -28] });
       const markers = points.map((p) => ({
         p,
         marker: L.marker([p.lat, p.lng], { icon, title: p.name, alt: p.name, keyboard: true }).bindPopup(popupContent(p)),
@@ -231,7 +242,7 @@ const selectClass =
       apply(points.length > 0);
     } catch (err) {
       console.error(err);
-      el.innerHTML = '<p class="p-6 text-sm text-ink-soft">Sorry, the map could not be loaded. Every spot is listed below.</p>';
+      el.innerHTML = '<p class="p-6 text-[0.875rem] text-ink-soft">Sorry, the map could not be loaded. Every spot is listed below.</p>';
     }
   }
 </script>

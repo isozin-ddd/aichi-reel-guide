@@ -4,7 +4,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import SpotGrid from '~/components/SpotGrid.astro';
 import EmptyState from '~/components/EmptyState.astro';
-import Icon from '~/components/Icon.astro';
+import SectionHeading from '~/components/SectionHeading.astro';
 import { getCategories, getPublishedSpots, type Category } from '~/lib/content';
 import { absoluteUrl, breadcrumbJsonLd } from '~/lib/seo';
 
@@ -42,38 +42,39 @@ const jsonLd = [
   description={`${c.short_description} The best ${c.name.toLowerCase()} in Nagoya and across Aichi, Japan — picked by locals, with short videos and practical tips.`}
   jsonLd={jsonLd}
 >
-  <div class="container-page pt-8 md:pt-12">
+  <div class="container-page page-top">
     <Breadcrumbs items={crumbs} />
-    <header class="mt-8 max-w-3xl">
-      <Icon name={c.icon} size={34} class="text-gold" />
-      <p class="eyebrow mt-5">Category</p>
-      <h1 class="mt-3 text-[3.2rem] md:text-[4.6rem]">{c.name}</h1>
-      <div class="prose-guide mt-6 text-ink-soft">
+    <header class="mt-16 grid gap-10 md:mt-24 md:grid-cols-[7fr_5fr] md:items-end md:gap-16">
+      <div>
+        <p class="label label-gold">Category</p>
+        <h1 class="display-xl mt-6 md:mt-10">{c.name}</h1>
+      </div>
+      <div class="prose-guide max-w-md text-ink-soft md:pb-3">
         {c.intro_en.map((p) => <p>{p}</p>)}
       </div>
     </header>
 
-    <section class="mt-16" aria-label={`${c.name} spots`}>
+    <section class="section" aria-label={`${c.name} spots`}>
       {
         spots.length > 0 ? (
-          <SpotGrid spots={spots} headingLevel="h2" eagerCount={2} />
+          <SpotGrid spots={spots} headingLevel="h2" eagerCount={1} />
         ) : (
           <EmptyState title="Coming soon">
-            We haven't published any {c.name.toLowerCase()} spots yet. See <a href="/spots/" class="text-ink underline">all spots</a>.
+            No {c.name.toLowerCase()} spots yet. See <a href="/spots/" class="link-quiet text-ink">all spots</a>.
           </EmptyState>
         )
       }
     </section>
 
-    <nav class="mt-20 border-t border-line pt-10" aria-labelledby="other-cats">
-      <h2 id="other-cats" class="eyebrow">Other categories</h2>
-      <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-3">
+    <nav class="section" aria-labelledby="other-cats">
+      <SectionHeading eyebrow="Other categories" id="other-cats" />
+      <ul class="flex flex-wrap gap-x-10 gap-y-4">
         {
           categories
             .filter((o) => o.id !== category.id)
             .map((o) => (
               <li>
-                <a href={`/categories/${o.id}/`} class="font-display text-[1.5rem] text-ink no-underline hover:text-gold">
+                <a href={`/categories/${o.id}/`} class="font-display text-[1.75rem] text-ink no-underline transition-colors duration-500 hover:text-gold md:text-[2.25rem]">
                   {o.data.name}
                 </a>
               </li>

@@ -16,12 +16,14 @@ const updated = '23 November 2026';
   description="How Aichi Reel Guide handles your data: cookie-free analytics, no accounts, and video embeds that only load when you choose to play them."
   jsonLd={[breadcrumbJsonLd(crumbs, Astro.site)]}
 >
-  <div class="container-page pt-8 md:pt-12">
+  <div class="container-page page-top">
     <Breadcrumbs items={crumbs} />
-    <div class="mx-auto mt-10 max-w-2xl">
-      <h1 class="text-[3rem] md:text-[4rem]">Privacy Policy</h1>
-      <p class="mt-3 text-sm text-ink-soft">Last updated {updated}</p>
-      <div class="prose-guide mt-10 [&_h2]:mt-12 [&_h2]:mb-3 [&_h2]:text-[1.8rem]">
+    <header class="mt-16 md:mt-24">
+      <p class="label label-gold">Last updated {updated}</p>
+      <h1 class="display-lg mt-6 md:mt-10">Privacy Policy</h1>
+    </header>
+    <div class="section max-w-xl">
+      <div class="prose-guide prose-legal">
         <p>
           This site is a free travel guide. There are no accounts, no sign-up forms and no advertising trackers. This
           page explains the small amount of data involved in running it.
@@ -61,14 +63,14 @@ const updated = '23 November 2026';
             SITE.contactEmail ? (
               <>
                 {' '}Write to{' '}
-                <a href={`mailto:${SITE.contactEmail}`} class="text-ink underline">
+                <a href={`mailto:${SITE.contactEmail}`} class="link-quiet">
                   {SITE.contactEmail}
                 </a>
                 .
               </>
             ) : (
               <>
-                {' '}See our <a href="/about/#contact" class="text-ink underline">contact details</a>.
+                {' '}See our <a href="/about/#contact" class="link-quiet">contact details</a>.
               </>
             )
           }
