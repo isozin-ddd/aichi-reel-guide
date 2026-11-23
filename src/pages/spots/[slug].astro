@@ -51,6 +51,15 @@ const facts: { label: string; value: string | null; href?: string }[] = [
   { label: 'Website', value: d.official_url, href: d.official_url ?? undefined },
 ];
 
+// Three at-a-glance facts shown right under the title.
+const shortHours = d.opening_hours?.split(/[.(]/)[0]?.trim() || null;
+const quickFacts = [
+  { icon: 'clock', label: 'Hours', value: shortHours },
+  { icon: 'receipt', label: 'Price', value: price ? (d.price_level === 0 ? price.text : `${price.symbol} · ${price.text}`) : null },
+  { icon: 'train', label: 'Station', value: d.nearest_station?.split('(')[0]?.trim() || null },
+].filter((f) => f.value) as { icon: 'clock' | 'receipt' | 'train'; label: string; value: string }[];
+const [leadParagraph, ...moreParagraphs] = d.description_en;
+
 const TRAVELER_LABELS = {
   english_menu: ['English menu available', 'No English menu'],
   cards_accepted: ['Cards accepted', 'Cash only'],
@@ -103,56 +112,92 @@ const description = `${d.summary_en} Local videos, opening hours, access and tra
   noindex={d.is_sample}
   jsonLd={[placeJsonLd, breadcrumbJsonLd(crumbs, Astro.site)]}
 >
-  <article class="container-page page-top">
-    <Breadcrumbs items={crumbs} />
+  <article class="page-top">
+    <div class="container-page">
+      <Breadcrumbs items={crumbs} />
 
-    {
-      d.is_sample && (
-        <p class="mt-10 border-y border-line py-4 text-[0.875rem] text-ink-soft" role="note">
-          <span class="label label-gold mr-3">Sample</span>
-          This place is fictional and only previews the design. It never appears in the production build.
-        </p>
-      )
-    }
+      {
+        d.is_sample && (
+          <p class="mt-10 border-y border-line py-4 text-[0.875rem] text-ink-soft" role="note">
+            <span class="label label-gold mr-3">Sample</span>
+            This place is fictional and only previews the design. It never appears in the production build.
+          </p>
+        )
+      }
+    </div>
 
-    <header class="mt-16 max-w-4xl md:mt-24">
-      <p class="label label-gold">
-        <a href={`/categories/${category.id}/`} class="no-underline hover:text-ink">{category.data.name}</a>
-        <span aria-hidden="true" class="mx-2">·</span>
-        <a href={`/areas/${area.id}/`} class="no-underline hover:text-ink">{area.data.name}</a>
-      </p>
-      <h1 class="display-lg mt-6 md:mt-10">{d.name_en}</h1>
-      {d.name_ja && <p class="label mt-6" lang="ja">{d.name_ja}</p>}
-      {status && <p class="label label-gold mt-6">{status}</p>}
-    </header>
-
-    <figure class="mt-16 md:mt-24">
+    <!-- Photo first: edge to edge on phones, framed on larger screens -->
+    <figure class="mt-8 md:mx-auto md:mt-14 md:max-w-[80rem] md:px-12">
       <FramedImage
         src={d.image}
         alt={d.image_alt}
-        sizes="(min-width: 1280px) 1184px, calc(100vw - 48px)"
+        sizes="(min-width: 1280px) 1184px, (min-width: 768px) calc(100vw - 96px), 100vw"
         widths={[480, 800, 1184, 1600]}
         class="aspect-[4/5] md:aspect-[16/9]"
         loading="eager"
         fetchpriority="high"
       />
-      <figcaption class="label mt-4 text-right">{d.image_credit}</figcaption>
+      <figcaption class="label mt-3 px-6 text-right md:px-0">{d.image_credit}</figcaption>
     </figure>
+
+    <div class="container-page">
+    <header class="mt-12 max-w-4xl md:mt-20">
+      <p class="label label-gold">
+        <a href={`/categories/${category.id}/`} class="no-underline hover:text-ink">{category.data.name}</a>
+        <span aria-hidden="true" class="mx-2">·</span>
+        <a href={`/areas/${area.id}/`} class="no-underline hover:text-ink">{area.data.name}</a>
+      </p>
+      <h1 class="display-lg mt-5 md:mt-8">{d.name_en}</h1>
+      {d.name_ja && <p class="label mt-5" lang="ja">{d.name_ja}</p>}
+      {status && <p class="label label-gold mt-5">{status}</p>}
+    </header>
+
+    {
+      quickFacts.length > 0 && (
+        <ul class="mt-10 grid grid-cols-3 border-y border-line md:mt-14 md:max-w-3xl" aria-label="At a glance">
+          {quickFacts.map((f, i) => (
+            <li class:list={['py-5 pr-3', i > 0 && 'border-l border-line pl-4']}>
+              <Icon name={f.icon} size={16} strokeWidth={1.4} class="text-gold" />
+              <p class="label mt-3">{f.label}</p>
+              <p class="mt-1 text-[0.875rem] leading-snug">{f.value}</p>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    </div>
+
+    {
+      d.gallery.length > 0 && (
+        <div
+          class="mt-12 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-2 md:mx-auto md:mt-16 md:max-w-[80rem] md:gap-6 md:px-12"
+          aria-label={`More photos of ${d.name_en}`}
+          role="region"
+          tabindex="0"
+        >
+          {d.gallery.map((g) => (
+            <figure class="w-[78%] shrink-0 snap-start sm:w-[45%] lg:w-[31%]">
+              <FramedImage src={g.image} alt={g.alt} sizes="(min-width: 1024px) 368px, 78vw" widths={[360, 560, 800]} aspect="4 / 5" />
+              <figcaption class="label mt-3">{g.credit}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )
+    }
+
+    <div class="container-page">
 
     <div class="section grid gap-20 !pt-24 md:grid-cols-[7fr_4fr] md:gap-24 md:!pt-32">
       <div>
         <p class="font-display text-[1.75rem] leading-[1.35] italic md:text-[2.25rem]" data-reveal>{d.summary_en}</p>
-        <div class="prose-guide mt-12 max-w-xl md:mt-16" data-reveal>
-          {d.description_en.map((p) => <p>{p}</p>)}
-        </div>
 
         {
           d.highlights_en.length > 0 && (
-            <section class="mt-20 md:mt-28" aria-labelledby="highlights-heading" data-reveal>
+            <section class="mt-14 md:mt-20" aria-labelledby="highlights-heading" data-reveal>
               <h2 id="highlights-heading" class="label label-gold border-t border-line pt-5">
                 Why we love it
               </h2>
-              <ol class="mt-8">
+              <ol class="mt-6">
                 {d.highlights_en.map((h, i) => (
                   <li class="flex gap-6 border-b border-line py-5 text-[0.9375rem]">
                     <span class="label label-gold pt-0.5">{String(i + 1).padStart(2, '0')}</span>
@@ -163,6 +208,25 @@ const description = `${d.summary_en} Local videos, opening hours, access and tra
             </section>
           )
         }
+
+        <div class="prose-guide mt-14 max-w-xl md:mt-20" data-reveal>
+          <p>{leadParagraph}</p>
+          {
+            moreParagraphs.length > 0 && (
+              <details class="group mt-6">
+                <summary class="label inline-flex cursor-pointer list-none items-center gap-2 border-b border-line pb-1 !text-ink hover:border-gold [&::-webkit-details-marker]:hidden">
+                  <span class="group-open:hidden">Read more</span>
+                  <span class="hidden group-open:inline">Show less</span>
+                </summary>
+                <div class="mt-6">
+                  {moreParagraphs.map((p) => (
+                    <p>{p}</p>
+                  ))}
+                </div>
+              </details>
+            )
+          }
+        </div>
 
         <VideoSection videos={videos} spotName={d.name_en} />
       </div>
@@ -218,9 +282,11 @@ const description = `${d.summary_en} Local videos, opening hours, access and tra
       </aside>
     </div>
 
+    </div>
+
     {
       nearby.length > 0 && (
-        <section class="section" aria-labelledby="nearby-heading">
+        <section class="container-page section" aria-labelledby="nearby-heading">
           <SectionHeading eyebrow="While you're there" title={`More in ${area.data.name}`} id="nearby-heading" />
           <SpotGrid spots={nearby} />
         </section>

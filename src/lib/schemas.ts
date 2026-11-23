@@ -89,6 +89,18 @@ export function createSpotSchema<I extends AnySchema, A extends AnySchema, C ext
       image: image(),
       image_alt: z.string().trim().min(5),
       image_credit: z.string().trim().min(1),
+      /** Extra photos shown as a swipeable strip under the title. */
+      gallery: z
+        .array(
+          z
+            .object({
+              image: image(),
+              alt: z.string().trim().min(5),
+              credit: z.string().trim().min(1),
+            })
+            .strict(),
+        )
+        .default([]),
 
       traveler_info: z.object({
         english_menu: triState,
