@@ -1,0 +1,117 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import FramedImage from '~/components/FramedImage.astro';
+import SpotGrid from '~/components/SpotGrid.astro';
+import EmptyState from '~/components/EmptyState.astro';
+import Icon from '~/components/Icon.astro';
+import { getAreas, getPublishedSpots, type Area } from '~/lib/content';
+import { absoluteUrl, breadcrumbJsonLd } from '~/lib/seo';
+
+export const getStaticPaths = (async () => {
+  const areas = await getAreas();
+  return areas.map((area) => ({ params: { slug: area.id }, props: { area, areas } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  area: Area;
+  areas: Area[];
+}
+const { area, areas } = Astro.props;
+const a = area.data;
+const spots = (await getPublishedSpots()).filter((s) => s.data.area.id === area.id);
+const others = areas.filter((x) => x.id !== area.id);
+const crumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Areas', href: '/areas/' },
+  { label: a.name, href: `/areas/${area.id}/` },
+];
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'TouristDestination',
+    name: `${a.name}, Aichi`,
+    description: a.intro_en[0],
+    url: absoluteUrl(`/areas/${area.id}/`, Astro.site),
+    geo: { '@type': 'GeoCoordinates', latitude: a.latitude, longitude: a.longitude },
+  },
+  breadcrumbJsonLd(crumbs, Astro.site),
+];
+---
+
+<BaseLayout
+  title={`${a.name} Travel Guide — Things to Do in ${a.name}, Aichi`}
+  description={`${a.tagline} Local videos and hand-picked spots in ${a.name}, Aichi Prefecture: what to see, where to eat and how to get there from Nagoya.`}
+  ogImage={a.image}
+  ogImageAlt={a.image_alt}
+  jsonLd={jsonLd}
+>
+  <div class="container-page pt-8 md:pt-12">
+    <Breadcrumbs items={crumbs} />
+    <header class="mt-6 grid gap-10 md:mt-10 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-14">
+      <div>
+        <p class="eyebrow">Area guide · <span lang="ja">{a.name_ja}</span></p>
+        <h1 class="mt-3 text-[3.2rem] md:text-[4.8rem]">{a.name}</h1>
+        <p class="mt-3 font-display text-[1.5rem] leading-snug text-ink-soft italic">{a.tagline}</p>
+      </div>
+      <figure>
+        <FramedImage
+          src={a.image}
+          alt={a.image_alt}
+          sizes="(min-width: 768px) 52vw, 100vw"
+          widths={[480, 720, 960, 1280]}
+          aspect="3 / 2"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <figcaption class="mt-2 text-right text-xs text-ink-soft">{a.image_credit}</figcaption>
+      </figure>
+    </header>
+
+    <div class="mt-12 grid gap-10 md:grid-cols-[1.6fr_1fr] md:gap-16">
+      <div class="prose-guide">
+        {a.intro_en.map((p) => <p>{p}</p>)}
+      </div>
+      {
+        a.getting_there_en && (
+          <aside class="self-start border-l-2 border-gold-soft pl-5">
+            <p class="eyebrow flex items-center gap-2">
+              <Icon name="train" size={15} /> Getting there
+            </p>
+            <p class="mt-3 text-[0.95rem] leading-relaxed text-ink-soft">{a.getting_there_en}</p>
+          </aside>
+        )
+      }
+    </div>
+
+    <section class="mt-20" aria-labelledby="spots-heading">
+      <h2 id="spots-heading" class="mb-10 text-[2.1rem] md:text-[2.7rem]">Spots in {a.name}</h2>
+      {
+        spots.length > 0 ? (
+          <SpotGrid spots={spots} />
+        ) : (
+          <EmptyState title={`${a.name} spots coming soon`}>
+            We're working with local creators to film {a.name}. Meanwhile, see{' '}
+            <a href="/spots/" class="text-ink underline">all spots</a>.
+          </EmptyState>
+        )
+      }
+    </section>
+
+    <nav class="mt-20 border-t border-line pt-10" aria-labelledby="other-areas">
+      <h2 id="other-areas" class="eyebrow">Other areas</h2>
+      <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-3">
+        {
+          others.map((o) => (
+            <li>
+              <a href={`/areas/${o.id}/`} class="font-display text-[1.5rem] text-ink no-underline hover:text-gold">
+                {o.data.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>

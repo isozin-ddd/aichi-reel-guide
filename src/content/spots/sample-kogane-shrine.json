@@ -1,0 +1,50 @@
+{
+  "slug": "sample-kogane-shrine",
+  "name_en": "Kogane Shrine (Sample)",
+  "name_ja": null,
+  "area": "nagoya",
+  "category": "culture-history",
+  "address": null,
+  "latitude": 35.1312,
+  "longitude": 136.9101,
+  "summary_en": "A small neighbourhood shrine with a camphor grove that stays cool even in August.",
+  "description_en": [
+    "This fictional shrine shows how a culture listing looks: a quiet precinct behind a vermilion torii, shaded by old camphor trees, where locals stop to bow on their way to work.",
+    "Visit early to hear the morning drum, and look for the hand-painted ema prayer plaques that change with the seasons."
+  ],
+  "highlights_en": [
+    "Shaded camphor grove",
+    "Seasonal ema plaques",
+    "Early-morning drum"
+  ],
+  "price_level": 0,
+  "opening_hours": "Grounds open 24 hours",
+  "closed_days": null,
+  "nearest_station": "Jingu-mae Station (sample)",
+  "access_en": "A 7-minute walk from the station.",
+  "official_url": null,
+  "google_maps_url": null,
+  "image": "../../assets/spots/sample-shrine.jpg",
+  "image_alt": "Illustration of a vermilion shrine gate in front of soft green hills",
+  "image_credit": "Illustration: Aichi Reel Guide",
+  "traveler_info": {
+    "english_menu": null,
+    "cards_accepted": null,
+    "reservation": null,
+    "vegetarian": null,
+    "tax_free": null
+  },
+  "videos": [
+    {
+      "platform": "tiktok",
+      "url": "https://www.tiktok.com/@sample.creator/video/7000000000000000002",
+      "creator_name": "Sample Creator",
+      "permission": "granted"
+    }
+  ],
+  "featured": true,
+  "status": "open",
+  "draft": false,
+  "is_sample": true,
+  "last_verified_at": "2026-11-20"
+}

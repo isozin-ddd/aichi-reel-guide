@@ -1,0 +1,57 @@
+{
+  "slug": "sample-tsuchi-pottery-studio",
+  "name_en": "Tsuchi Pottery Studio (Sample)",
+  "name_ja": null,
+  "area": "tokoname",
+  "category": "experiences",
+  "address": null,
+  "latitude": 34.8889,
+  "longitude": 136.8361,
+  "summary_en": "Try the wheel for an hour in a working studio on the Pottery Footpath.",
+  "description_en": [
+    "A fictional studio to demonstrate experience listings. Short wheel sessions are taught with plenty of gestures and a little English, and you choose a glaze for your piece at the end.",
+    "Finished pottery needs to be fired, so ask about overseas shipping if you won't be back in town."
+  ],
+  "highlights_en": [
+    "One-hour beginner wheel session",
+    "Pick your own glaze",
+    "Overseas shipping available"
+  ],
+  "price_level": 2,
+  "opening_hours": "10:00–16:00 (sessions on the hour)",
+  "closed_days": "Tuesdays",
+  "nearest_station": "Tokoname Station",
+  "access_en": "About 10 minutes on foot, up the hill along the Pottery Footpath.",
+  "official_url": null,
+  "google_maps_url": null,
+  "image": "../../assets/spots/sample-pottery.jpg",
+  "image_alt": "Illustration of a terracotta vase on a turning pottery wheel",
+  "image_credit": "Illustration: Aichi Reel Guide",
+  "traveler_info": {
+    "english_menu": true,
+    "cards_accepted": true,
+    "reservation": true,
+    "vegetarian": null,
+    "tax_free": null
+  },
+  "videos": [
+    {
+      "platform": "instagram",
+      "url": "https://www.instagram.com/p/SamplePost02/",
+      "creator_name": "Sample Creator",
+      "permission": "own"
+    },
+    {
+      "platform": "youtube",
+      "url": "https://vimeo.com/123456789",
+      "creator_name": "Sample Creator",
+      "permission": "own",
+      "caption_en": "Unsupported link — shows a link card"
+    }
+  ],
+  "featured": true,
+  "status": "open",
+  "draft": false,
+  "is_sample": true,
+  "last_verified_at": "2026-11-20"
+}

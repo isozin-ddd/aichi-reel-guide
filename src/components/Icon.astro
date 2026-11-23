@@ -1,0 +1,107 @@
+---
+/**
+ * Inline Lucide icon (rendered at build time, zero client JS).
+ */
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Clock,
+  Coffee,
+  CreditCard,
+  ExternalLink,
+  Gem,
+  Landmark,
+  Leaf,
+  Link,
+  MapPin,
+  Map as MapIcon,
+  Menu,
+  Play,
+  Search,
+  Share2,
+  ShoppingBag,
+  Sparkles,
+  TrainFront,
+  Trees,
+  CalendarX,
+  CalendarCheck,
+  Receipt,
+  BookOpen,
+  Info,
+  X,
+  Film,
+  type IconNode,
+} from 'lucide';
+
+const ICONS = {
+  'arrow-left': ArrowLeft,
+  'arrow-right': ArrowRight,
+  check: Check,
+  clock: Clock,
+  coffee: Coffee,
+  'credit-card': CreditCard,
+  'external-link': ExternalLink,
+  gem: Gem,
+  landmark: Landmark,
+  leaf: Leaf,
+  link: Link,
+  'map-pin': MapPin,
+  map: MapIcon,
+  menu: Menu,
+  play: Play,
+  search: Search,
+  share: Share2,
+  'shopping-bag': ShoppingBag,
+  sparkles: Sparkles,
+  train: TrainFront,
+  trees: Trees,
+  'calendar-x': CalendarX,
+  'calendar-check': CalendarCheck,
+  receipt: Receipt,
+  'book-open': BookOpen,
+  info: Info,
+  x: X,
+  film: Film,
+} satisfies Record<string, IconNode>;
+
+export type IconName = keyof typeof ICONS;
+
+interface Props {
+  name: IconName;
+  size?: number;
+  class?: string;
+  strokeWidth?: number;
+  /** Provide a label only when the icon conveys meaning on its own. */
+  label?: string;
+}
+
+const { name, size = 18, class: className, strokeWidth = 1.6, label } = Astro.props;
+const node = ICONS[name];
+const children = node
+  .map(([tag, attrs]) => {
+    const a = Object.entries(attrs)
+      .map(([k, v]) => `${k}="${String(v).replace(/"/g, '&quot;')}"`)
+      .join(' ');
+    return `<${tag} ${a}/>`;
+  })
+  .join('');
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={strokeWidth}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class:list={['shrink-0', className]}
+  aria-hidden={label ? undefined : 'true'}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  focusable="false"
+  set:html={children}
+/>

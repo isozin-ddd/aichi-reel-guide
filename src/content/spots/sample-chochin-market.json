@@ -1,0 +1,43 @@
+{
+  "slug": "sample-chochin-market",
+  "name_en": "Chochin Market (Sample)",
+  "name_ja": null,
+  "area": "inuyama",
+  "category": "shopping",
+  "address": null,
+  "latitude": 35.3846,
+  "longitude": 136.9422,
+  "summary_en": "Lantern-lit stalls selling dango, local sake and small crafts in the old castle town.",
+  "description_en": [
+    "Our fictional market sits on the main street below the castle, where the lanterns come on as the light fades.",
+    "Graze on grilled dango, pick up a bottle from a local brewery, and leave room for something sweet."
+  ],
+  "highlights_en": [
+    "Grilled dango and street snacks",
+    "Local sake tastings",
+    "Small handmade souvenirs"
+  ],
+  "price_level": 1,
+  "opening_hours": "10:00–17:00",
+  "closed_days": "Irregular",
+  "nearest_station": "Inuyama Station",
+  "access_en": "Around 15 minutes on foot from the station.",
+  "official_url": null,
+  "google_maps_url": null,
+  "image": "../../assets/spots/sample-market.jpg",
+  "image_alt": "Illustration of a row of glowing paper lanterns above a market stall",
+  "image_credit": "Illustration: Aichi Reel Guide",
+  "traveler_info": {
+    "english_menu": null,
+    "cards_accepted": false,
+    "reservation": null,
+    "vegetarian": null,
+    "tax_free": false
+  },
+  "videos": [],
+  "featured": false,
+  "status": "open",
+  "draft": false,
+  "is_sample": true,
+  "last_verified_at": "2026-11-20"
+}

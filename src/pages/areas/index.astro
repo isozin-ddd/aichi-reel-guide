@@ -1,0 +1,53 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import FramedImage from '~/components/FramedImage.astro';
+import { getAreas } from '~/lib/content';
+import { breadcrumbJsonLd } from '~/lib/seo';
+
+const areas = await getAreas();
+const crumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Areas', href: '/areas/' },
+];
+---
+
+<BaseLayout
+  title="Areas of Aichi — Nagoya, Inuyama, Tokoname & More"
+  description="Where to go in Aichi, Japan: area guides to Nagoya, Inuyama, Tokoname, Nagakute, Toyota and Gamagori, with local videos and tips for getting there."
+  jsonLd={[breadcrumbJsonLd(crumbs, Astro.site)]}
+>
+  <div class="container-page pt-8 md:pt-12">
+    <Breadcrumbs items={crumbs} />
+    <header class="mt-6 max-w-2xl">
+      <p class="eyebrow">Where to go</p>
+      <h1 class="mt-3 text-[3rem] md:text-[4.2rem]">Areas of Aichi</h1>
+      <p class="mt-4 text-lg leading-relaxed text-ink-soft">
+        Most visitors base themselves in Nagoya. Everything here is an easy day trip by train.
+      </p>
+    </header>
+    <ul class="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        areas.map((a, i) => (
+          <li class="group relative">
+            <FramedImage
+              src={a.data.image}
+              alt={a.data.image_alt}
+              sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 92vw"
+              widths={[360, 540, 720]}
+              aspect="3 / 2"
+              loading={i < 2 ? 'eager' : 'lazy'}
+            />
+            <p class="mt-4 chip" lang="ja">{a.data.name_ja}</p>
+            <h2 class="mt-1 text-[2rem]">
+              <a href={`/areas/${a.id}/`} class="no-underline after:absolute after:inset-0 hover:text-gold">
+                {a.data.name}
+              </a>
+            </h2>
+            <p class="mt-1 text-[0.95rem] text-ink-soft">{a.data.tagline}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</BaseLayout>

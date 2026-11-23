@@ -1,0 +1,38 @@
+{
+  "slug": "sample-draft-teahouse",
+  "name_en": "Unfinished Teahouse (Sample)",
+  "name_ja": null,
+  "area": "nagakute",
+  "category": "food-cafes",
+  "address": null,
+  "latitude": 35.172,
+  "longitude": 137.09,
+  "summary_en": "A draft entry used to prove that drafts never reach a build.",
+  "description_en": [
+    "Drafts are never built, not even in previews."
+  ],
+  "highlights_en": [],
+  "price_level": null,
+  "opening_hours": null,
+  "closed_days": null,
+  "nearest_station": null,
+  "access_en": null,
+  "official_url": null,
+  "google_maps_url": null,
+  "image": "../../assets/spots/sample-cafe.jpg",
+  "image_alt": "Illustration of a coffee cup used as a placeholder image for a draft entry",
+  "image_credit": "Illustration: Aichi Reel Guide",
+  "traveler_info": {
+    "english_menu": null,
+    "cards_accepted": null,
+    "reservation": null,
+    "vegetarian": null,
+    "tax_free": null
+  },
+  "videos": [],
+  "featured": false,
+  "status": "open",
+  "draft": true,
+  "is_sample": true,
+  "last_verified_at": "2026-11-20"
+}

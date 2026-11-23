@@ -1,0 +1,94 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbJsonLd } from '~/lib/seo';
+
+const crumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about/' },
+];
+---
+
+<BaseLayout
+  title="About the Guide"
+  description="Aichi Reel Guide is a free, independent English travel guide to Nagoya and Aichi, built around short videos by local creators. Here's how we choose spots and work with creators."
+  jsonLd={[breadcrumbJsonLd(crumbs, Astro.site)]}
+>
+  <div class="container-page pt-8 md:pt-12">
+    <Breadcrumbs items={crumbs} />
+    <div class="mx-auto mt-10 max-w-2xl">
+      <p class="eyebrow">About</p>
+      <h1 class="mt-3 text-[3rem] md:text-[4.2rem]">A local's-eye view of Aichi</h1>
+      <div class="prose-guide mt-8">
+        <p>
+          Aichi gets overlooked. Plenty of travellers pass through Nagoya on the bullet train between Tokyo and Kyoto
+          without stepping off — and miss one of Japan's great food cities, a National Treasure castle, centuries-old
+          pottery towns and an easygoing stretch of coast.
+        </p>
+        <p>
+          Aichi Reel Guide is a free, independent guide in English that tries to fix that. Every spot is paired with
+          short videos by people who actually live here, so you can see what a place feels like before you go, plus
+          the practical details — hours, access, cards or cash — that make a visit go smoothly.
+        </p>
+      </div>
+
+      <h2 class="mt-14 text-[2.1rem]">How we work</h2>
+      <div class="prose-guide mt-4">
+        <p>
+          <strong>Videos with permission only.</strong> We never download or re-upload anyone's work. Videos stay on
+          Instagram, TikTok or YouTube and are embedded only after the creator has agreed — and nothing loads from
+          those platforms until you tap play.
+        </p>
+        <p>
+          <strong>Facts we can stand behind.</strong> If we haven't confirmed an opening time or price, we leave it
+          out rather than guess. Each spot shows the date its details were last checked. Things change, so it's always
+          worth confirming before a special trip.
+        </p>
+        <p>
+          <strong>No paid placements.</strong> Spots are chosen on merit. The guide is free to use and doesn't require
+          an account.
+        </p>
+      </div>
+
+      <h2 id="contact" class="mt-14 scroll-mt-8 text-[2.1rem]">Contact</h2>
+      <div class="prose-guide mt-4">
+        <p>
+          Spotted something out of date, or you're a creator who'd like to be featured? We'd love to hear from you.
+        </p>
+        {
+          SITE.contactEmail ? (
+            <p>
+              Email us at{' '}
+              <a href={`mailto:${SITE.contactEmail}`} class="text-ink underline hover:text-gold">
+                {SITE.contactEmail}
+              </a>
+              .
+            </p>
+          ) : null
+        }
+        {
+          SITE.social.length > 0 && (
+            <p>
+              Or send a message on{' '}
+              {SITE.social.map((s, i) => (
+                <>
+                  {i > 0 && (i === SITE.social.length - 1 ? ' or ' : ', ')}
+                  <a href={s.href} target="_blank" rel="me noopener" class="text-ink underline hover:text-gold">
+                    {s.label}
+                  </a>
+                </>
+              ))}
+              .
+            </p>
+          )
+        }
+        {
+          !SITE.contactEmail && SITE.social.length === 0 && (
+            <p class="text-ink-soft">Contact details will be added here shortly.</p>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>

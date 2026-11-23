@@ -1,0 +1,41 @@
+{
+  "slug": "sample-shiosai-onsen",
+  "name_en": "Shiosai Footbath (Sample)",
+  "name_ja": null,
+  "area": "gamagori",
+  "category": "nature",
+  "address": null,
+  "latitude": 34.8189,
+  "longitude": 137.2321,
+  "summary_en": "A free seaside footbath with views across Mikawa Bay to the island.",
+  "description_en": [
+    "This fictional footbath is a sample for coastal listings. Bring a small towel, roll up your trousers and watch the boats cross the bay."
+  ],
+  "highlights_en": [
+    "Free to use",
+    "Bay views at sunset"
+  ],
+  "price_level": 0,
+  "opening_hours": "09:00–18:00",
+  "closed_days": null,
+  "nearest_station": "Gamagori Station",
+  "access_en": null,
+  "official_url": null,
+  "google_maps_url": null,
+  "image": "../../assets/spots/sample-onsen.jpg",
+  "image_alt": "Illustration of steam rising from warm water beside the sea",
+  "image_credit": "Illustration: Aichi Reel Guide",
+  "traveler_info": {
+    "english_menu": null,
+    "cards_accepted": null,
+    "reservation": null,
+    "vegetarian": null,
+    "tax_free": null
+  },
+  "videos": [],
+  "featured": false,
+  "status": "temporarily_closed",
+  "draft": false,
+  "is_sample": true,
+  "last_verified_at": "2026-11-20"
+}

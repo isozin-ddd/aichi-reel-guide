@@ -1,0 +1,17 @@
+{
+  "slug": "tokoname",
+  "name": "Tokoname",
+  "name_ja": "常滑",
+  "tagline": "Kilns, clay pipes and slow afternoons.",
+  "intro_en": [
+    "Tokoname is one of Japan's Six Ancient Kilns, and pottery is still woven into daily life here. The hillside Pottery Footpath winds past brick chimneys, walls studded with old clay pipes and shochu bottles, and small studios where you can watch — or try — throwing on the wheel.",
+    "It's also the closest town to Chubu Centrair International Airport, which makes it a calm first or last stop on a trip."
+  ],
+  "getting_there_en": "Tokoname Station is on the Meitetsu Tokoname Line between Meitetsu Nagoya Station and Chubu Centrair International Airport.",
+  "latitude": 34.8866,
+  "longitude": 136.8326,
+  "order": 3,
+  "image_alt": "Illustration of rounded clay pots lined up in front of a tall brick kiln chimney",
+  "image": "../../assets/areas/tokoname.jpg",
+  "image_credit": "Illustration: Aichi Reel Guide"
+}

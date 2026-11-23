@@ -1,0 +1,10 @@
+{
+  "slug": "shopping",
+  "name": "Shopping",
+  "icon": "shopping-bag",
+  "short_description": "Markets, makers and souvenir finds.",
+  "intro_en": [
+    "Covered arcades, morning markets and small makers' shops. Where to find souvenirs worth carrying home — and the ones locals buy for themselves."
+  ],
+  "order": 4
+}

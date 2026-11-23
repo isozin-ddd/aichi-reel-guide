@@ -1,0 +1,17 @@
+{
+  "slug": "inuyama",
+  "name": "Inuyama",
+  "name_ja": "犬山",
+  "tagline": "An original castle above the Kiso River.",
+  "intro_en": [
+    "Inuyama sits on the Kiso River on Aichi's northern edge, and its hilltop castle is one of only five in Japan whose main keep is a designated National Treasure. Below it, the old castle-town streets are lined with wooden merchant houses, small sake breweries and snack stalls that make for an easy half-day stroll.",
+    "In the warmer months the river becomes the stage for ukai, the centuries-old practice of cormorant fishing by firelight, watched from traditional boats."
+  ],
+  "getting_there_en": "Inuyama is on the Meitetsu Inuyama Line from Meitetsu Nagoya Station; the castle and old town are a short walk from Inuyama Station or Inuyama-yuen Station.",
+  "latitude": 35.3883,
+  "longitude": 136.9393,
+  "order": 2,
+  "image_alt": "Illustration of a small castle on a wooded hill above a river with a fishing boat",
+  "image": "../../assets/areas/inuyama.jpg",
+  "image_credit": "Illustration: Aichi Reel Guide"
+}

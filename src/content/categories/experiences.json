@@ -1,0 +1,10 @@
+{
+  "slug": "experiences",
+  "name": "Experiences",
+  "icon": "sparkles",
+  "short_description": "Hands-on classes and things to do.",
+  "intro_en": [
+    "Get your hands dirty at a pottery wheel, learn a craft, or join a seasonal festival. Experiences that turn a trip into a story you'll actually tell."
+  ],
+  "order": 3
+}

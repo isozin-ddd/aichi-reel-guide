@@ -1,0 +1,85 @@
+---
+import FramedImage from './FramedImage.astro';
+import Icon from './Icon.astro';
+import { priceLabel, STATUS_LABELS } from '~/lib/format';
+import type { Area, Category, Spot } from '~/lib/content';
+import { displayableVideos } from '~/lib/content';
+
+interface Props {
+  spot: Spot;
+  area: Area;
+  category: Category;
+  headingLevel?: 'h2' | 'h3';
+  eager?: boolean;
+}
+
+const { spot, area, category, headingLevel: H = 'h3', eager = false } = Astro.props;
+const d = spot.data;
+const price = priceLabel(d.price_level);
+const videoCount = displayableVideos(spot).length;
+const status = STATUS_LABELS[d.status];
+const searchText = [d.name_en, d.name_ja, d.summary_en, area.data.name, category.data.name, ...d.highlights_en]
+  .filter(Boolean)
+  .join(' ')
+  .toLowerCase();
+---
+
+<article
+  class="group relative flex flex-col"
+  data-spot-card
+  data-area={area.id}
+  data-category={category.id}
+  data-search={searchText}
+>
+  <div class="relative">
+    <FramedImage
+      src={d.image}
+      alt={d.image_alt}
+      sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 92vw"
+      widths={[360, 540, 720]}
+      aspect="4 / 3"
+      loading={eager ? 'eager' : 'lazy'}
+      imgClass="transition-transform duration-700 group-hover:scale-[1.03]"
+    />
+    {
+      videoCount > 0 && (
+        <span class="absolute top-3 left-3 inline-flex items-center gap-1.5 bg-paper/95 px-2.5 py-1 text-[0.68rem] font-semibold tracking-[0.12em] text-ink uppercase">
+          <Icon name="play" size={12} strokeWidth={2.2} />
+          {videoCount === 1 ? 'Video' : `${videoCount} videos`}
+        </span>
+      )
+    }
+    {
+      d.is_sample && (
+        <span class="absolute top-3 right-3 bg-ink px-2 py-1 text-[0.65rem] font-semibold tracking-[0.12em] text-paper uppercase">
+          Sample
+        </span>
+      )
+    }
+  </div>
+  <div class="flex flex-1 flex-col pt-4">
+    <p class="chip">
+      <span>{area.data.name}</span>
+      <span aria-hidden="true" class="text-gold-soft">·</span>
+      <span>{category.data.name}</span>
+      {
+        price && (
+          <>
+            <span aria-hidden="true" class="text-gold-soft">·</span>
+            <span title={price.text}>
+              <span aria-hidden="true">{price.symbol}</span>
+              <span class="sr-only">Price: {price.text}</span>
+            </span>
+          </>
+        )
+      }
+    </p>
+    <H class="mt-2 text-[1.6rem]">
+      <a href={`/spots/${spot.id}/`} class="no-underline after:absolute after:inset-0 hover:text-gold">
+        {d.name_en}
+      </a>
+    </H>
+    <p class="mt-2 text-[0.95rem] leading-relaxed text-ink-soft">{d.summary_en}</p>
+    {status && <p class="mt-3 text-xs font-semibold tracking-wide text-alert uppercase">{status}</p>}
+  </div>
+</article>

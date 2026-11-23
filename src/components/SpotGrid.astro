@@ -1,0 +1,27 @@
+---
+import SpotCard from './SpotCard.astro';
+import type { Spot } from '~/lib/content';
+import { getLookups } from '~/lib/content';
+
+interface Props {
+  spots: Spot[];
+  headingLevel?: 'h2' | 'h3';
+  eagerCount?: number;
+}
+const { spots, headingLevel = 'h3', eagerCount = 0 } = Astro.props;
+const { areaById, categoryById } = await getLookups();
+---
+
+<div class="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3" data-spot-grid>
+  {
+    spots.map((spot, i) => (
+      <SpotCard
+        spot={spot}
+        area={areaById.get(spot.data.area.id)!}
+        category={categoryById.get(spot.data.category.id)!}
+        headingLevel={headingLevel}
+        eager={i < eagerCount}
+      />
+    ))
+  }
+</div>

@@ -1,0 +1,17 @@
+{
+  "slug": "nagakute",
+  "name": "Nagakute",
+  "name_ja": "長久手",
+  "tagline": "Green parkland on Nagoya's doorstep.",
+  "intro_en": [
+    "Nagakute, just east of Nagoya, is home to the Aichi Expo Memorial Park — the site of the 2005 World Expo, now a vast green space of forest trails, lawns and play areas. Ghibli Park is located inside the park grounds.",
+    "Beyond the park, the town is a relaxed, residential place with plenty of space to breathe, making it a good half-day escape from the city."
+  ],
+  "getting_there_en": "Take the Higashiyama subway line to Fujigaoka, then change to the Linimo maglev line for Ai·Chikyuhaku-Kinen-Koen Station.",
+  "latitude": 35.1838,
+  "longitude": 137.0866,
+  "order": 4,
+  "image_alt": "Illustration of rounded green trees across soft rolling hills",
+  "image": "../../assets/areas/nagakute.jpg",
+  "image_credit": "Illustration: Aichi Reel Guide"
+}

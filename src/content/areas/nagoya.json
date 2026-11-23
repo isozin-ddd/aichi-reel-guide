@@ -1,0 +1,17 @@
+{
+  "slug": "nagoya",
+  "name": "Nagoya",
+  "name_ja": "名古屋",
+  "tagline": "Castle town, food capital, easy base.",
+  "intro_en": [
+    "Nagoya is Aichi's capital and the natural base for most trips to the prefecture. It's a big, practical city with wide avenues and an efficient subway, yet it rewards slow wandering: Nagoya Castle with its golden shachihoko roof ornaments, the deep forest of Atsuta Shrine, and covered shopping arcades around Osu that mix old temples with vintage stores.",
+    "Come hungry. The city has its own food culture, known locally as Nagoya-meshi — think miso katsu, hitsumabushi grilled eel, crisp tebasaki chicken wings and the famous coffee-shop 'morning service', where a drink comes with toast and an egg at no extra charge."
+  ],
+  "getting_there_en": "Nagoya Station is a stop for every Tokaido Shinkansen service, and Chubu Centrair International Airport is connected by the Meitetsu line.",
+  "latitude": 35.1709,
+  "longitude": 136.8815,
+  "order": 1,
+  "image_alt": "Illustration of a tiered castle keep beside a calm moat",
+  "image": "../../assets/areas/nagoya.jpg",
+  "image_credit": "Illustration: Aichi Reel Guide"
+}

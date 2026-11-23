@@ -1,0 +1,14 @@
+---
+import LazyEmbed from './LazyEmbed.astro';
+import type { ParsedVideo } from '~/lib/video';
+
+interface Props {
+  video: ParsedVideo & { platform: 'tiktok' };
+  creatorName: string;
+  caption?: string;
+  spotName: string;
+}
+const props = Astro.props;
+---
+
+<LazyEmbed {...props} aspect="9 / 16" />

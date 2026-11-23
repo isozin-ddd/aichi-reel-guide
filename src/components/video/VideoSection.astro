@@ -1,0 +1,60 @@
+---
+/**
+ * Renders a spot's permitted videos. Each entry is parsed defensively;
+ * anything unsupported becomes a link card (or is skipped if unsafe), so a
+ * bad URL in the data can never break the page.
+ */
+import YouTubeEmbed from './YouTubeEmbed.astro';
+import TikTokEmbed from './TikTokEmbed.astro';
+import InstagramEmbed from './InstagramEmbed.astro';
+import VideoLinkCard from './VideoLinkCard.astro';
+import { parseVideoUrl, PLATFORM_LABELS, toSafeHttpsUrl, type ParsedVideo } from '~/lib/video';
+
+interface VideoEntry {
+  platform: 'instagram' | 'tiktok' | 'youtube';
+  url: string;
+  creator_name: string;
+  caption_en?: string | undefined;
+}
+interface Props {
+  videos: VideoEntry[];
+  spotName: string;
+}
+const { videos, spotName } = Astro.props;
+
+const items = videos
+  .map((v) => ({ entry: v, parsed: parseVideoUrl(v.url, v.platform) }))
+  .filter((i) => i.parsed || toSafeHttpsUrl(i.entry.url));
+
+const is = <P extends ParsedVideo['platform']>(p: ParsedVideo | null, platform: P): p is ParsedVideo & { platform: P } =>
+  p?.platform === platform;
+---
+
+{
+  items.length > 0 && (
+    <section aria-labelledby="videos-heading" class="mt-16">
+      <p class="eyebrow">Seen by locals</p>
+      <h2 id="videos-heading" class="mt-2 text-[2rem] md:text-[2.5rem]">
+        Videos
+      </h2>
+      <ul class="-mx-5 mt-8 flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto px-5 pb-4 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0">
+        {items.map(({ entry, parsed }) => (
+          <li class="w-[72%] shrink-0 snap-start sm:w-[45%] md:w-auto">
+            {is(parsed, 'youtube') ? (
+              <YouTubeEmbed video={parsed} creatorName={entry.creator_name} caption={entry.caption_en} spotName={spotName} />
+            ) : is(parsed, 'tiktok') ? (
+              <TikTokEmbed video={parsed} creatorName={entry.creator_name} caption={entry.caption_en} spotName={spotName} />
+            ) : is(parsed, 'instagram') ? (
+              <InstagramEmbed video={parsed} creatorName={entry.creator_name} caption={entry.caption_en} spotName={spotName} />
+            ) : (
+              <VideoLinkCard url={entry.url} creatorName={entry.creator_name} caption={entry.caption_en} />
+            )}
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 text-xs leading-relaxed text-ink-soft">
+        Videos are shared with their creators' permission and stay hosted on {Object.values(PLATFORM_LABELS).join(', ')}. Nothing loads from those sites until you tap play.
+      </p>
+    </section>
+  )
+}

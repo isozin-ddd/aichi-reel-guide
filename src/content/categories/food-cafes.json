@@ -1,0 +1,10 @@
+{
+  "slug": "food-cafes",
+  "name": "Food & Cafes",
+  "icon": "coffee",
+  "short_description": "Kissaten, noodle counters and local flavours.",
+  "intro_en": [
+    "Aichi eats differently. From old-school kissaten serving a generous morning set to counters ladling out thick kishimen noodles, these are the places locals actually queue for — filmed by the people who know them best."
+  ],
+  "order": 1
+}

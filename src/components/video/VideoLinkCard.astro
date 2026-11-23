@@ -1,0 +1,39 @@
+---
+/**
+ * Plain link to the original post. Used for unsupported URLs and as the
+ * fallback when an embed fails. Renders nothing if the URL isn't a safe https URL.
+ */
+import Icon from '../Icon.astro';
+import { toSafeHttpsUrl } from '~/lib/video';
+
+interface Props {
+  url: string;
+  creatorName: string;
+  platformLabel?: string;
+  caption?: string;
+}
+const { url, creatorName, platformLabel, caption } = Astro.props;
+const safe = toSafeHttpsUrl(url);
+const host = safe?.hostname.replace(/^www\./, '');
+---
+
+{
+  safe && (
+    <a
+      href={safe.href}
+      target="_blank"
+      rel="noopener noreferrer nofollow"
+      class="flex h-full min-h-40 flex-col justify-between gap-6 border border-line bg-paper p-5 no-underline transition-colors hover:border-gold"
+    >
+      <span class="eyebrow">{platformLabel ?? 'Video'}</span>
+      <span>
+        {caption && <span class="block font-display text-xl text-ink">{caption}</span>}
+        <span class="mt-1 block text-sm text-ink-soft">by {creatorName}</span>
+      </span>
+      <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.12em] text-ink uppercase">
+        Watch on {platformLabel ?? host}
+        <Icon name="external-link" size={14} />
+      </span>
+    </a>
+  )
+}

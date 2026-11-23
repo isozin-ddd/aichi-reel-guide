@@ -1,0 +1,254 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import FramedImage from '~/components/FramedImage.astro';
+import Icon, { type IconName } from '~/components/Icon.astro';
+import ShareButtons from '~/components/ShareButtons.astro';
+import SpotGrid from '~/components/SpotGrid.astro';
+import VideoSection from '~/components/video/VideoSection.astro';
+import { displayableVideos, getLookups, getPublishedSpots, type Spot } from '~/lib/content';
+import { formatDate, googleMapsUrl, priceLabel, STATUS_LABELS } from '~/lib/format';
+import { absoluteUrl, breadcrumbJsonLd } from '~/lib/seo';
+import { getImage } from 'astro:assets';
+
+export const getStaticPaths = (async () => {
+  const spots = await getPublishedSpots();
+  return spots.map((spot) => ({ params: { slug: spot.id }, props: { spot, all: spots } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  spot: Spot;
+  all: Spot[];
+}
+
+const { spot, all } = Astro.props;
+const d = spot.data;
+const { areaById, categoryById } = await getLookups();
+const area = areaById.get(d.area.id)!;
+const category = categoryById.get(d.category.id)!;
+const price = priceLabel(d.price_level);
+const status = STATUS_LABELS[d.status];
+const mapsUrl = googleMapsUrl(d);
+const videos = displayableVideos(spot);
+const nearby = all.filter((s) => s.id !== spot.id && s.data.area.id === d.area.id).slice(0, 3);
+const pageUrl = absoluteUrl(`/spots/${spot.id}/`, Astro.site);
+
+const crumbs = [
+  { label: 'Home', href: '/' },
+  { label: area.data.name, href: `/areas/${area.id}/` },
+  { label: d.name_en, href: `/spots/${spot.id}/` },
+];
+
+const facts: { icon: IconName; label: string; value: string | null; href?: string }[] = [
+  { icon: 'map-pin', label: 'Address', value: d.address },
+  { icon: 'clock', label: 'Opening hours', value: d.opening_hours },
+  { icon: 'calendar-x', label: 'Closed', value: d.closed_days },
+  { icon: 'receipt', label: 'Price', value: price ? `${price.symbol} · ${price.text}` : null },
+  { icon: 'train', label: 'Nearest station', value: d.nearest_station },
+  { icon: 'arrow-right', label: 'Getting there', value: d.access_en },
+  { icon: 'external-link', label: 'Official website', value: d.official_url, href: d.official_url ?? undefined },
+];
+
+const TRAVELER_LABELS = {
+  english_menu: ['English menu available', 'No English menu'],
+  cards_accepted: ['Cards accepted', 'Cash only'],
+  reservation: ['Reservation recommended', 'No reservation needed'],
+  vegetarian: ['Vegetarian options', 'No vegetarian options'],
+  tax_free: ['Tax-free shopping', 'Not tax-free'],
+} as const;
+const traveler = (Object.keys(TRAVELER_LABELS) as (keyof typeof TRAVELER_LABELS)[])
+  .map((key) => ({ key, value: d.traveler_info[key] }))
+  .filter((t): t is { key: keyof typeof TRAVELER_LABELS; value: boolean } => t.value !== null)
+  .map(({ key, value }) => ({ yes: value, text: TRAVELER_LABELS[key][value ? 0 : 1] }));
+
+const ogImage = await getImage({ src: d.image, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+const isRestaurant = category.id === 'food-cafes';
+const placeJsonLd: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': isRestaurant ? 'Restaurant' : 'TouristAttraction',
+  name: d.name_en,
+  ...(d.name_ja ? { alternateName: d.name_ja } : {}),
+  description: d.summary_en,
+  url: pageUrl,
+  image: absoluteUrl(ogImage.src, Astro.site),
+  geo: { '@type': 'GeoCoordinates', latitude: d.latitude, longitude: d.longitude },
+  address: {
+    '@type': 'PostalAddress',
+    ...(d.address ? { streetAddress: d.address } : {}),
+    addressLocality: area.data.name,
+    addressRegion: 'Aichi',
+    addressCountry: 'JP',
+  },
+  hasMap: mapsUrl,
+  ...(d.official_url ? { sameAs: [d.official_url] } : {}),
+  ...(isRestaurant && price && d.price_level! > 0 ? { priceRange: price.symbol } : {}),
+  ...(!isRestaurant && d.price_level === 0 ? { isAccessibleForFree: true } : {}),
+  ...(isRestaurant && d.traveler_info.reservation !== null
+    ? { acceptsReservations: d.traveler_info.reservation }
+    : {}),
+};
+
+const title = `${d.name_en} — ${category.data.name} in ${area.data.name}`;
+const description = `${d.summary_en} Local videos, opening hours, access and traveller tips for ${d.name_en} in ${area.data.name}, Aichi.`.slice(0, 300);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={d.image}
+  ogImageAlt={d.image_alt}
+  ogType="article"
+  noindex={d.is_sample}
+  jsonLd={[placeJsonLd, breadcrumbJsonLd(crumbs, Astro.site)]}
+>
+  <article class="container-page pt-8 md:pt-12">
+    <Breadcrumbs items={crumbs} />
+
+    {
+      d.is_sample && (
+        <p class="mt-6 flex items-start gap-3 border border-gold-soft bg-paper px-4 py-3 text-sm text-ink" role="note">
+          <Icon name="info" size={18} class="mt-0.5 text-gold" />
+          <span>
+            <strong>Sample listing.</strong> This place is fictional and exists only to preview the site design. It is
+            never included in the production build.
+          </span>
+        </p>
+      )
+    }
+
+    <header class="mt-6 grid gap-8 md:mt-10 md:grid-cols-[1.1fr_1fr] md:items-end md:gap-14">
+      <div>
+        <p class="chip">
+          <a href={`/categories/${category.id}/`} class="hover:text-gold">{category.data.name}</a>
+          <span aria-hidden="true" class="text-gold-soft">·</span>
+          <a href={`/areas/${area.id}/`} class="hover:text-gold">{area.data.name}</a>
+        </p>
+        <h1 class="mt-3 text-[2.9rem] md:text-[4.4rem]">{d.name_en}</h1>
+        {d.name_ja && <p class="mt-2 text-lg text-ink-soft" lang="ja">{d.name_ja}</p>}
+        {
+          status && (
+            <p class="mt-4 inline-block border border-alert px-3 py-1 text-xs font-semibold tracking-[0.12em] text-alert uppercase">
+              {status}
+            </p>
+          )
+        }
+      </div>
+      <p class="font-display text-[1.5rem] leading-snug text-ink-soft italic md:text-[1.75rem]">{d.summary_en}</p>
+    </header>
+
+    <figure class="mt-10 md:mt-14">
+      <FramedImage
+        src={d.image}
+        alt={d.image_alt}
+        sizes="(min-width: 1216px) 1136px, 100vw"
+        widths={[480, 800, 1136, 1600]}
+        aspect="16 / 9"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <figcaption class="mt-2 text-right text-xs text-ink-soft">{d.image_credit}</figcaption>
+    </figure>
+
+    <div class="mt-12 grid gap-14 md:grid-cols-[1.6fr_1fr] md:gap-16">
+      <div>
+        <div class="prose-guide">
+          {d.description_en.map((p) => <p>{p}</p>)}
+        </div>
+
+        {
+          d.highlights_en.length > 0 && (
+            <section class="mt-12" aria-labelledby="highlights-heading">
+              <h2 id="highlights-heading" class="text-[1.9rem]">
+                Why we love it
+              </h2>
+              <ul class="mt-5 space-y-3">
+                {d.highlights_en.map((h) => (
+                  <li class="flex gap-3 border-b border-line pb-3 text-[1rem] leading-relaxed">
+                    <Icon name="sparkles" size={18} class="mt-1 text-gold" />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        <VideoSection videos={videos} spotName={d.name_en} />
+      </div>
+
+      <aside class="md:sticky md:top-8 md:self-start" aria-labelledby="facts-heading">
+        <div class="border border-line bg-paper p-6 md:p-7">
+          <h2 id="facts-heading" class="text-[1.7rem]">Good to know</h2>
+          <dl class="mt-5 space-y-4 text-[0.95rem]">
+            {
+              facts
+                .filter((f) => f.value)
+                .map((f) => (
+                  <div class="relative min-w-0 pl-[30px]">
+                      <dt class="text-xs font-semibold tracking-[0.1em] text-ink-soft uppercase">
+                        <Icon name={f.icon} size={18} class="absolute top-0.5 left-0 text-gold" />
+                        {f.label}
+                      </dt>
+                      <dd class="mt-0.5 break-words">
+                        {f.href ? (
+                          <a href={f.href} target="_blank" rel="noopener" class="text-ink underline hover:text-gold">
+                            {new URL(f.href).hostname.replace(/^www\./, '')}
+                          </a>
+                        ) : (
+                          f.value
+                        )}
+                      </dd>
+                  </div>
+                ))
+            }
+          </dl>
+
+          {
+            traveler.length > 0 && (
+              <>
+                <hr class="rule my-6" />
+                <h3 class="text-xs font-semibold tracking-[0.1em] text-ink-soft uppercase" style="font-family: var(--font-sans)">
+                  For travellers
+                </h3>
+                <ul class="mt-3 space-y-2 text-[0.95rem]">
+                  {traveler.map((t) => (
+                    <li class="flex items-center gap-2.5">
+                      <Icon name={t.yes ? 'check' : 'x'} size={16} class={t.yes ? 'text-olive' : 'text-ink-soft'} strokeWidth={2.2} />
+                      <span>{t.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )
+          }
+
+          <a href={mapsUrl} target="_blank" rel="noopener" class="btn btn-primary mt-7 w-full">
+            <Icon name="map-pin" size={16} /> Open in Google Maps
+          </a>
+
+          <p class="mt-5 flex items-center gap-2 text-xs text-ink-soft">
+            <Icon name="calendar-check" size={14} />
+            Info last checked {formatDate(d.last_verified_at)}. Details can change — check before you go.
+          </p>
+        </div>
+
+        <div class="mt-6">
+          <ShareButtons url={pageUrl} title={d.name_en} />
+        </div>
+      </aside>
+    </div>
+
+    {
+      nearby.length > 0 && (
+        <section class="mt-24 border-t border-line pt-14" aria-labelledby="nearby-heading">
+          <p class="eyebrow">While you're there</p>
+          <h2 id="nearby-heading" class="mt-2 mb-10 text-[2rem] md:text-[2.5rem]">
+            More in {area.data.name}
+          </h2>
+          <SpotGrid spots={nearby} />
+        </section>
+      )
+    }
+  </article>
+</BaseLayout>

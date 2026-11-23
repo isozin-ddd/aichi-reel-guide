@@ -1,0 +1,50 @@
+{
+  "slug": "sample-momiji-trail",
+  "name_en": "Momiji Valley Trail (Sample)",
+  "name_ja": null,
+  "area": "toyota",
+  "category": "nature",
+  "address": null,
+  "latitude": 35.1376,
+  "longitude": 137.3163,
+  "summary_en": "A riverside walking path that turns crimson and gold in late November.",
+  "description_en": [
+    "This fictional trail shows how a nature listing works: an easy, mostly flat riverside walk with benches along the way.",
+    "Weekends in peak foliage season get busy, so go early on a weekday if you can."
+  ],
+  "highlights_en": [
+    "Easy, mostly flat path",
+    "Peak colour in late November",
+    "Riverside benches"
+  ],
+  "price_level": 0,
+  "opening_hours": null,
+  "closed_days": null,
+  "nearest_station": null,
+  "access_en": "Reached by local bus; check the timetable before you set out.",
+  "official_url": null,
+  "google_maps_url": null,
+  "image": "../../assets/spots/sample-gorge.jpg",
+  "image_alt": "Illustration of a river winding through a green gorge with autumn trees",
+  "image_credit": "Illustration: Aichi Reel Guide",
+  "traveler_info": {
+    "english_menu": null,
+    "cards_accepted": null,
+    "reservation": null,
+    "vegetarian": null,
+    "tax_free": null
+  },
+  "videos": [
+    {
+      "platform": "youtube",
+      "url": "https://youtu.be/sampleVid02",
+      "creator_name": "Sample Creator",
+      "permission": "granted"
+    }
+  ],
+  "featured": false,
+  "status": "open",
+  "draft": false,
+  "is_sample": true,
+  "last_verified_at": "2026-11-20"
+}

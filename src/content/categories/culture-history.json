@@ -1,0 +1,10 @@
+{
+  "slug": "culture-history",
+  "name": "Culture & History",
+  "icon": "landmark",
+  "short_description": "Castles, shrines and craft traditions.",
+  "intro_en": [
+    "Samurai-era castles, ancient shrines and craft towns with centuries of history. Our picks focus on places that bring the past to life without needing a guidebook in hand."
+  ],
+  "order": 2
+}

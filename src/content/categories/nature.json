@@ -1,0 +1,10 @@
+{
+  "slug": "nature",
+  "name": "Nature",
+  "icon": "trees",
+  "short_description": "Gorges, parks, rivers and coast.",
+  "intro_en": [
+    "Aichi is more than its cities. River gorges, forest parks and a gentle stretch of coastline are all within easy reach of Nagoya by train."
+  ],
+  "order": 5
+}

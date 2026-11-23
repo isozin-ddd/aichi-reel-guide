@@ -1,0 +1,18 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found" description="Sorry, we couldn't find that page." noindex canonicalPath="/404/">
+  <div class="container-page py-24 text-center md:py-32">
+    <p class="eyebrow">404</p>
+    <h1 class="mt-4 text-[3rem] md:text-[4.5rem]">We couldn't find that page</h1>
+    <p class="mx-auto mt-5 max-w-md text-lg text-ink-soft">
+      It may have moved, or the spot may no longer be listed. Try one of these instead.
+    </p>
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <a href="/" class="btn btn-primary">Home</a>
+      <a href="/spots/" class="btn btn-ghost">All spots</a>
+      <a href="/map/" class="btn btn-ghost">Map</a>
+    </div>
+  </div>
+</BaseLayout>

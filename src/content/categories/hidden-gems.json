@@ -1,0 +1,10 @@
+{
+  "slug": "hidden-gems",
+  "name": "Hidden Gems",
+  "icon": "gem",
+  "short_description": "Quiet corners most visitors miss.",
+  "intro_en": [
+    "The back alleys, tiny bars and unhurried neighbourhoods that rarely make the big guides. Discovered and filmed by local creators."
+  ],
+  "order": 6
+}

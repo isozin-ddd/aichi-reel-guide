@@ -1,0 +1,144 @@
+---
+/**
+ * Click-to-load embed. Until the visitor taps "Play", nothing is requested
+ * from the social platform. If the iframe doesn't load within the timeout,
+ * the preview is replaced by a link card so the page never breaks.
+ */
+import Icon from '../Icon.astro';
+import VideoLinkCard from './VideoLinkCard.astro';
+import type { ParsedVideo } from '~/lib/video';
+import { PLATFORM_LABELS } from '~/lib/video';
+
+interface Props {
+  video: ParsedVideo;
+  creatorName: string;
+  caption?: string;
+  spotName: string;
+  /** CSS aspect ratio of the player box. */
+  aspect: string;
+}
+const { video, creatorName, caption, spotName, aspect } = Astro.props;
+const label = PLATFORM_LABELS[video.platform];
+---
+
+<lazy-embed
+  class="block"
+  data-platform={video.platform}
+  data-embed={video.embedUrl}
+  data-title={`${label} video by ${creatorName} about ${spotName}`}
+>
+  <div class="relative overflow-hidden bg-ink text-paper" style={`aspect-ratio: ${aspect}`} data-stage>
+    <button
+      type="button"
+      class="group absolute inset-0 flex w-full flex-col justify-between p-5 text-left"
+      data-play
+    >
+      <span class="eyebrow !text-gold-soft"><span class="sr-only">Play </span>{label}<span class="sr-only"> video</span></span>
+      <span class="flex flex-col items-start gap-4">
+        <span
+          class="inline-flex size-14 items-center justify-center rounded-full border border-paper/60 transition-colors group-hover:border-gold-soft group-hover:bg-paper group-hover:text-ink"
+        >
+          <Icon name="play" size={22} strokeWidth={1.8} />
+        </span>
+        <span>
+          {caption && <span class="block font-display text-2xl leading-tight">{caption}</span>}
+          <span class="mt-1 block text-sm text-paper/80">by {creatorName}</span>
+        </span>
+        <span class="text-[0.7rem] leading-snug text-paper/70">
+          Tap to load from {label}. Their privacy policy applies once loaded.
+        </span>
+      </span>
+    </button>
+    <p class="sr-only" aria-live="polite" data-status></p>
+  </div>
+  <div class="hidden" data-fallback-card style={`aspect-ratio: ${aspect}`}>
+    <VideoLinkCard url={video.canonicalUrl} creatorName={creatorName} platformLabel={label} caption="This video couldn't load here" />
+  </div>
+  <a
+    href={video.canonicalUrl}
+    target="_blank"
+    rel="noopener noreferrer nofollow"
+    class="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.1em] text-ink-soft uppercase hover:text-gold"
+  >
+    Open on {label}
+    <Icon name="external-link" size={13} />
+  </a>
+</lazy-embed>
+
+<script>
+  const ALLOWED_PREFIXES = [
+    'https://www.youtube-nocookie.com/embed/',
+    'https://www.tiktok.com/embed/v2/',
+    'https://www.instagram.com/p/',
+    'https://www.instagram.com/reel/',
+  ];
+  const TIMEOUT_MS = 15000;
+
+  class LazyEmbed extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector<HTMLButtonElement>('[data-play]');
+      button?.addEventListener('click', () => this.load(), { once: true });
+    }
+
+    fail() {
+      this.querySelector<HTMLElement>('[data-stage]')?.classList.add('hidden');
+      const card = this.querySelector<HTMLElement>('[data-fallback-card]');
+      card?.classList.remove('hidden');
+      card?.querySelector('a')?.focus();
+    }
+
+    load() {
+      try {
+        const src = this.dataset.embed ?? '';
+        if (!ALLOWED_PREFIXES.some((p) => src.startsWith(p)) || !navigator.onLine) {
+          this.fail();
+          return;
+        }
+        const stage = this.querySelector<HTMLElement>('[data-stage]')!;
+        const status = this.querySelector<HTMLElement>('[data-status]');
+        const iframe = document.createElement('iframe');
+        iframe.src = src;
+        iframe.title = this.dataset.title ?? 'Video';
+        iframe.className = 'absolute inset-0 h-full w-full border-0 bg-ink';
+        iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen; clipboard-write';
+        iframe.allowFullscreen = true;
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.setAttribute(
+          'sandbox',
+          'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation',
+        );
+
+        let settled = false;
+        const timer = window.setTimeout(() => {
+          if (!settled) {
+            settled = true;
+            iframe.remove();
+            this.fail();
+          }
+        }, TIMEOUT_MS);
+        iframe.addEventListener('load', () => {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(timer);
+          if (status) status.textContent = 'Video loaded.';
+        });
+        iframe.addEventListener('error', () => {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(timer);
+          iframe.remove();
+          this.fail();
+        });
+
+        this.querySelector('[data-play]')?.remove();
+        if (status) status.textContent = 'Loading video…';
+        stage.appendChild(iframe);
+        iframe.focus();
+      } catch {
+        this.fail();
+      }
+    }
+  }
+
+  if (!customElements.get('lazy-embed')) customElements.define('lazy-embed', LazyEmbed);
+</script>

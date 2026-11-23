@@ -1,0 +1,17 @@
+{
+  "slug": "gamagori",
+  "name": "Gamagori",
+  "name_ja": "蒲郡",
+  "tagline": "Bay views, hot springs and a little island.",
+  "intro_en": [
+    "Gamagori faces the sheltered waters of Mikawa Bay. Its symbol is Takeshima, a small wooded island linked to the shore by a long footbridge, with a shrine at its heart.",
+    "The town has hot-spring districts along the coast and a waterfront that's lovely at sunset — an easy seaside day trip from Nagoya."
+  ],
+  "getting_there_en": "Gamagori Station is on the JR Tokaido Line, with direct rapid trains from Nagoya Station.",
+  "latitude": 34.8257,
+  "longitude": 137.2195,
+  "order": 6,
+  "image_alt": "Illustration of a small wooded island linked to the shore by a long bridge",
+  "image": "../../assets/areas/gamagori.jpg",
+  "image_credit": "Illustration: Aichi Reel Guide"
+}

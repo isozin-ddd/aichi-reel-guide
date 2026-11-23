@@ -1,0 +1,42 @@
+---
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/spots/', label: 'Spots' },
+  { href: '/map/', label: 'Map' },
+  { href: '/about/', label: 'About' },
+];
+const isActive = (href: string) => path === href || path.startsWith(href) || path === href.slice(0, -1);
+---
+
+<a
+  href="#main"
+  class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[1000] focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+  >Skip to content</a
+>
+<header class="border-b border-line bg-ivory/95">
+  <div class="container-page flex h-16 items-center justify-between gap-4 md:h-20">
+    <a href="/" class="group flex items-baseline gap-2 no-underline" aria-label="Aichi Reel Guide — home">
+      <span class="font-display text-[1.45rem] leading-none text-ink md:text-[1.7rem]">Aichi Reel Guide</span>
+    </a>
+    <nav aria-label="Main">
+      <ul class="flex items-center gap-5 text-[0.78rem] font-semibold tracking-[0.14em] uppercase md:gap-9">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={[
+                  'border-b py-1 no-underline transition-colors hover:text-gold',
+                  isActive(item.href) ? 'border-gold text-ink' : 'border-transparent text-ink-soft',
+                ]}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

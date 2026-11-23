@@ -1,0 +1,17 @@
+{
+  "slug": "toyota",
+  "name": "Toyota",
+  "name_ja": "豊田",
+  "tagline": "Car city with a wild, wooded heart.",
+  "intro_en": [
+    "Toyota is synonymous with the carmaker headquartered here, but the city stretches far into the Mikawa highlands. Its best-known escape is Korankei, a river gorge famous for its autumn foliage, on the edge of Asuke, an old merchant town of earthen-walled storehouses.",
+    "For anyone curious about manufacturing, the city also offers a look at the industry that shaped modern Aichi."
+  ],
+  "getting_there_en": "Toyota-shi Station is on the Meitetsu Mikawa Line and connects with the Tsurumai subway line from central Nagoya. Korankei is reached by bus from the city.",
+  "latitude": 35.0827,
+  "longitude": 137.1561,
+  "order": 5,
+  "image_alt": "Illustration of a river gorge framed by autumn foliage and a red arched bridge",
+  "image": "../../assets/areas/toyota.jpg",
+  "image_credit": "Illustration: Aichi Reel Guide"
+}

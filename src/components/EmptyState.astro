@@ -1,0 +1,15 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  title: string;
+  id?: string;
+  hidden?: boolean;
+}
+const { title, id, hidden = false } = Astro.props;
+---
+
+<div id={id} hidden={hidden} class="border border-dashed border-line bg-paper px-6 py-14 text-center" role="status">
+  <Icon name="film" size={28} class="mx-auto text-gold" />
+  <p class="mt-4 font-display text-2xl">{title}</p>
+  <div class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink-soft"><slot /></div>
+</div>

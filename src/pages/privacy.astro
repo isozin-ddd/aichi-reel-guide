@@ -1,0 +1,79 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Breadcrumbs from '~/components/Breadcrumbs.astro';
+import { SITE } from '~/config/site';
+import { breadcrumbJsonLd } from '~/lib/seo';
+
+const crumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Privacy Policy', href: '/privacy/' },
+];
+const updated = '23 November 2026';
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="How Aichi Reel Guide handles your data: cookie-free analytics, no accounts, and video embeds that only load when you choose to play them."
+  jsonLd={[breadcrumbJsonLd(crumbs, Astro.site)]}
+>
+  <div class="container-page pt-8 md:pt-12">
+    <Breadcrumbs items={crumbs} />
+    <div class="mx-auto mt-10 max-w-2xl">
+      <h1 class="text-[3rem] md:text-[4rem]">Privacy Policy</h1>
+      <p class="mt-3 text-sm text-ink-soft">Last updated {updated}</p>
+      <div class="prose-guide mt-10 [&_h2]:mt-12 [&_h2]:mb-3 [&_h2]:text-[1.8rem]">
+        <p>
+          This site is a free travel guide. There are no accounts, no sign-up forms and no advertising trackers. This
+          page explains the small amount of data involved in running it.
+        </p>
+
+        <h2>Analytics</h2>
+        <p>
+          We use Cloudflare Web Analytics to understand which pages are useful. It does not use cookies or local
+          storage, and does not track you across websites. It records aggregate information such as page views,
+          referring sites, country and device type.
+        </p>
+
+        <h2>Hosting</h2>
+        <p>
+          The site is hosted on Cloudflare Pages. Like any web host, Cloudflare processes technical data such as IP
+          addresses to deliver pages and protect the service from abuse.
+        </p>
+
+        <h2>Video embeds</h2>
+        <p>
+          Spot pages feature videos hosted on Instagram, TikTok and YouTube. Nothing is loaded from those services
+          until you tap a video's play button. Once you do, the platform's own privacy policy applies to that embedded
+          player, and it may set cookies. YouTube videos are loaded through YouTube's privacy-enhanced
+          (youtube-nocookie.com) mode.
+        </p>
+
+        <h2>Maps</h2>
+        <p>
+          The map page loads map tiles from a third-party tile provider, which receives your IP address in order to
+          serve the images. “Open in Google Maps” links take you to Google, whose privacy policy applies there.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          If you email us, we use your message only to reply. Questions about this policy?
+          {
+            SITE.contactEmail ? (
+              <>
+                {' '}Write to{' '}
+                <a href={`mailto:${SITE.contactEmail}`} class="text-ink underline">
+                  {SITE.contactEmail}
+                </a>
+                .
+              </>
+            ) : (
+              <>
+                {' '}See our <a href="/about/#contact" class="text-ink underline">contact details</a>.
+              </>
+            )
+          }
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
