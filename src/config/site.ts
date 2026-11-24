@@ -8,10 +8,10 @@ function parseEmail(value: string | undefined): string | null {
 }
 
 export const SITE = {
-  name: 'Aichi Reel Guide',
-  tagline: 'Discover Aichi through local videos.',
+  name: 'Next Stop Nagoya',
+  tagline: "How to get around Nagoya — we'll show you.",
   description:
-    'An independent English guide to Aichi, Japan — Nagoya and beyond — told through short videos by local creators. Cafes, castles, crafts and quiet corners worth the trip.',
+    'An independent English guide to Nagoya and Aichi, Japan, that shows you exactly how to get there: which line, which direction, which exit. Plus honest ratings, hours, prices and the best way to see each spot.',
   locale: 'en_US',
   /**
    * Contact address from PUBLIC_CONTACT_EMAIL. When unset (or not an email

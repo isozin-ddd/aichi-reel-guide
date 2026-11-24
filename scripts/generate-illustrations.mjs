@@ -2,7 +2,7 @@
  * Generates the site's original placeholder illustrations with sharp.
  *
  * Every image produced here is drawn from code in this file, so the project
- * owns it outright (credit: "Illustration: Aichi Reel Guide"). Replace them
+ * owns it outright (credit: "Illustration: Next Stop Nagoya"). Replace them
  * with your own photography whenever you like — keep the same file names or
  * update the paths in the content JSON.
  *
@@ -105,14 +105,8 @@ const scenes = {
     `<rect y="${h * 0.74}" width="${w}" height="${h * 0.26}" fill="${C.sea}"/>` +
     waterLines(w, h * 0.77, h, C.paper, 26, 5) +
     ridge(w, h, h * 0.93, 30, 3, C.deepOlive)],
-  'site/og-default.jpg': [1200, 630, (w, h) =>
-    `<circle cx="${w * 0.78}" cy="${h * 0.34}" r="${h * 0.16}" fill="${C.gold}" opacity="0.85"/>` +
-    ridge(w, h, h * 0.62, 50, 11, C.mist) +
-    ridge(w, h, h * 0.72, 55, 23, C.sage) +
-    `<rect y="${h * 0.8}" width="${w}" height="${h * 0.2}" fill="${C.deepSea}"/>` +
-    waterLines(w, h * 0.83, h, C.paper, 18, 5) +
-    `<text x="72" y="190" font-family="Georgia, 'Times New Roman', serif" font-size="84" fill="${C.charcoal}">Aichi Reel Guide</text>` +
-    `<text x="76" y="250" font-family="Helvetica, Arial, sans-serif" font-size="30" letter-spacing="2" fill="${C.olive}">DISCOVER AICHI THROUGH LOCAL VIDEOS</text>`],
+  // site/og-default.jpg is hand-made (Next Stop Nagoya brand artwork with the
+  // shachihoko mascot), so this script no longer generates or overwrites it.
 
   // ----- Areas -----
   'areas/nagoya.jpg': [1600, 1100, (w, h) =>

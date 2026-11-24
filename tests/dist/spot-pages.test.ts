@@ -11,6 +11,16 @@ describe('built site', () => {
     expect(existsSync(resolve(dist, 'index.html'))).toBe(true);
     expect(existsSync(resolve(dist, 'spots/index.html'))).toBe(true);
   });
+
+  it('uses the Next Stop Nagoya brand and never the old name', () => {
+    const pages = ['index.html', 'about/index.html', 'privacy/index.html', 'spots/nagoya-castle/index.html'];
+    for (const page of pages) {
+      const html = read(page);
+      expect(html).toContain('Next Stop Nagoya');
+      expect(html).not.toMatch(/Aichi Reel Guide/i);
+    }
+    expect(read('index.html')).toMatch(/<title>Next Stop Nagoya/);
+  });
 });
 
 describe('Nagoya Castle page', () => {

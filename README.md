@@ -1,6 +1,6 @@
-# Aichi Reel Guide
+# Next Stop Nagoya
 
-**Discover Aichi through local videos.**
+**How to get around Nagoya — we'll show you.**
 訪日外国人向けの愛知県旅行ガイド（英語）。Astro による完全静的サイトで、Cloudflare Pages にデプロイします。
 
 - Astro 7 / TypeScript / Tailwind CSS 4 / Leaflet（/map のみ）/ Lucide
@@ -61,4 +61,4 @@
 ## 現状について
 
 - **公開時点では本番にスポットが0件**です（サンプルは本番に出さないルールのため）。トップ・一覧・エリア・カテゴリ・地図には「準備中」表示が出ます。実在スポットのJSONを追加すると自動で反映されます
-- 画像は `scripts/generate-illustrations.mjs` で生成したオリジナルのイラストです（クレジット: Illustration: Aichi Reel Guide）。実写真に差し替える場合は同じパスに置くか JSON のパスを変更してください
+- 画像は `scripts/generate-illustrations.mjs` で生成したオリジナルのイラストです（クレジット: Illustration: Next Stop Nagoya）。実写真に差し替える場合は同じパスに置くか JSON のパスを変更してください
