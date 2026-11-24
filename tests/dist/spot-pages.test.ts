@@ -16,12 +16,14 @@ describe('built site', () => {
 describe('Nagoya Castle page', () => {
   const html = read('spots/nagoya-castle/index.html');
 
-  it('uses the stone monument photo as the main image', () => {
-    expect(html).toMatch(/<img[^>]+src="\/_astro\/nagoya-castle-stone-monument\.[^"]+"/);
+  it('leads with the castle keep photo, anchored so the keep stays in frame', () => {
+    const firstImg = html.match(/<img[^>]+>/)?.[0] ?? '';
+    expect(firstImg).toMatch(/src="\/_astro\/nagoya-castle-keep\.[^"]+"/);
+    expect(firstImg).toContain('object-position: 70% 50%');
   });
 
   it('shows every gallery photo with its alt text', () => {
-    for (const name of ['keep', 'shachihoko', 'hommaru-palace', 'moat']) {
+    for (const name of ['stone-monument', 'shachihoko', 'hommaru-palace', 'moat']) {
       expect(html).toMatch(new RegExp(`<img[^>]+src="/_astro/nagoya-castle-${name}\\.[^"]+"[^>]*alt="[^"]{5,}"`));
     }
   });

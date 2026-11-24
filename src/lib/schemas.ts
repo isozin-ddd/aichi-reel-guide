@@ -89,6 +89,11 @@ export function createSpotSchema<I extends AnySchema, A extends AnySchema, C ext
       image: image(),
       image_alt: z.string().trim().min(5),
       image_credit: z.string().trim().min(1),
+      /** Where to anchor the main photo when it is cropped, as CSS object-position, e.g. "70% 50%". */
+      image_focus: z
+        .string()
+        .regex(/^\d{1,3}% \d{1,3}%$/, 'Use "X% Y%", e.g. "70% 50%"')
+        .optional(),
       /** Extra photos shown as a swipeable strip under the title. */
       gallery: z
         .array(
