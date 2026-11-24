@@ -22,7 +22,71 @@
   "opening_hours": "9:00–16:30. Last entry to the Hommaru Palace and the Nishinomaru Treasure House is 16:00, and both are about a 10-minute walk from the gates. Hours are longer on some festival evenings, such as cherry-blossom season.",
   "closed_days": "29 December – 1 January (may change for events)",
   "nearest_station": "Nagoyajo Station (Meijo subway line, M07), Exit 7",
-  "access_en": "From Nagoya Station, take the Higashiyama subway line to Sakae and change to the Meijo line for two stops to Nagoyajo Station (about 15 minutes, ¥240). From Exit 7 it is about a 5-minute walk to the East Gate. Or take the Me~guru sightseeing bus from stop 11 at the Nagoya Station bus terminal to the Nagoya Castle stop, about a minute from the Main Gate; it runs Tuesday to Sunday (if Monday is a holiday, it runs then and rests on Tuesday instead), and a one-day pass costs ¥500. City bus Sakae 13 from Sakae also stops right at the Main Gate (Nagoya-jo Seimon-mae).",
+  "access_en": "Nagoyajo Station (Meijo Line, M07), Exit 7, then a 5-minute walk to the East Gate. From Nagoya Station: Higashiyama Line to Sakae, change to the Meijo Line (Clockwise) for two stops; about 15 minutes, ¥240.",
+  "directions": {
+    "from_en": "Nagoya Station",
+    "minutes": 15,
+    "fare_yen": 240,
+    "changes": 1,
+    "legs": [
+      {
+        "type": "stop",
+        "name_en": "Nagoya Station",
+        "code": "H08",
+        "name_ja": "名古屋",
+        "note_en": "Follow the yellow subway signs to the Higashiyama Line."
+      },
+      {
+        "type": "ride",
+        "line_en": "Higashiyama Line",
+        "line_ja": "東山線",
+        "badge": "H",
+        "color": "#E8A800",
+        "toward_en": "Fujigaoka",
+        "stops": 2,
+        "minutes": 4
+      },
+      {
+        "type": "stop",
+        "name_en": "Sakae",
+        "code": "H10 · M05",
+        "name_ja": "栄",
+        "note_en": "Change here. Follow the purple signs to the Meijo Line platform marked Clockwise (右回り) for Nagoyajo and Ozone."
+      },
+      {
+        "type": "ride",
+        "line_en": "Meijo Line",
+        "line_ja": "名城線",
+        "badge": "M",
+        "color": "#7B4A9A",
+        "toward_en": "Nagoyajo / Ozone (Clockwise)",
+        "stops": 2,
+        "minutes": 3
+      },
+      {
+        "type": "stop",
+        "name_en": "Nagoyajo",
+        "code": "M07",
+        "name_ja": "名古屋城",
+        "note_en": "Called Shiyakusho (市役所) until January 2023, so older maps and some bus stops still use that name."
+      },
+      {
+        "type": "walk",
+        "minutes": 5,
+        "text_en": "Take Exit 7. You come up by Nagoya City Hall, the building with a castle-style roof. Walk to the castle's East Gate."
+      }
+    ],
+    "alternatives": [
+      {
+        "title_en": "No changes: Me~guru sightseeing bus",
+        "text_en": "From stop 11 at the Nagoya Station bus terminal to the Nagoya Castle stop, a minute from the Main Gate. Runs Tuesday to Sunday (if Monday is a holiday, it runs then and rests on Tuesday). One-day pass ¥500."
+      },
+      {
+        "title_en": "From Sakae: city bus",
+        "text_en": "Sakae 13 stops right at the Main Gate (Nagoya-jo Seimon-mae)."
+      }
+    ]
+  },
   "admission_en": "Adults ¥1,000; junior high school age and under free. The castle ticket includes the Hommaru Palace. A combined ticket with the Tokugawa-en garden is ¥1,040 (cash only). Cards and e-money are accepted at the ticket counter, and tickets can also be bought online through asoview.",
   "visitor_rating": {
     "stars": 4,

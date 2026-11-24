@@ -82,6 +82,65 @@ export function createSpotSchema<I extends AnySchema, A extends AnySchema, C ext
       closed_days: optionalText,
       nearest_station: optionalText,
       access_en: optionalText,
+      /**
+       * Step-by-step public transport directions, drawn as a route card.
+       * The site's signature: one main route from a hub, then short alternatives.
+       */
+      directions: z
+        .object({
+          from_en: z.string().trim().min(2),
+          minutes: z.number().int().positive(),
+          fare_yen: z.number().int().nonnegative(),
+          changes: z.number().int().nonnegative(),
+          legs: z
+            .array(
+              z.discriminatedUnion('type', [
+                z
+                  .object({
+                    type: z.literal('stop'),
+                    name_en: z.string().trim().min(2),
+                    name_ja: z.string().trim().min(1).optional(),
+                    code: z.string().trim().min(1).optional(),
+                    note_en: z.string().trim().min(5).optional(),
+                  })
+                  .strict(),
+                z
+                  .object({
+                    type: z.literal('ride'),
+                    line_en: z.string().trim().min(2),
+                    line_ja: z.string().trim().min(1).optional(),
+                    badge: z.string().trim().min(1).max(3),
+                    color: z.string().regex(/^#[0-9a-fA-F]{6}$/),
+                    toward_en: z.string().trim().min(2),
+                    stops: z.number().int().positive().optional(),
+                    minutes: z.number().int().positive().optional(),
+                    note_en: z.string().trim().min(5).optional(),
+                  })
+                  .strict(),
+                z
+                  .object({
+                    type: z.literal('walk'),
+                    minutes: z.number().int().positive(),
+                    text_en: z.string().trim().min(5),
+                  })
+                  .strict(),
+              ]),
+            )
+            .min(3),
+          alternatives: z
+            .array(
+              z
+                .object({
+                  title_en: z.string().trim().min(2),
+                  text_en: z.string().trim().min(10),
+                })
+                .strict(),
+            )
+            .default([]),
+        })
+        .strict()
+        .optional(),
+
       /** Admission prices for visitors, in plain English. */
       admission_en: optionalText.optional(),
 

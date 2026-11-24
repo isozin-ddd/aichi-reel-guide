@@ -4,6 +4,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Breadcrumbs from '~/components/Breadcrumbs.astro';
 import FramedImage from '~/components/FramedImage.astro';
 import Icon from '~/components/Icon.astro';
+import RouteCard from '~/components/RouteCard.astro';
 import ShareButtons from '~/components/ShareButtons.astro';
 import SpotGrid from '~/components/SpotGrid.astro';
 import SectionHeading from '~/components/SectionHeading.astro';
@@ -56,10 +57,15 @@ const shortHours = d.opening_hours?.split(/[.(]/)[0]?.trim() || null;
 const shortAdmission = d.admission_en?.split(/[.;(]/)[0]?.trim() || priceText;
 const quickFacts = [
   { icon: 'star', label: 'For visitors', value: rating ? `${rating.stars} / 5` : null },
-  { icon: 'train', label: 'Station', value: d.nearest_station?.split('(')[0]?.trim() || null },
+  {
+    icon: 'train',
+    label: d.directions ? `From ${d.directions.from_en.replace(/ Station$/, '')}` : 'Station',
+    value: d.directions ? `${d.directions.minutes} min · ¥${d.directions.fare_yen}` : d.nearest_station?.split('(')[0]?.trim() || null,
+    href: d.directions ? '#getting-there' : undefined,
+  },
   { icon: 'clock', label: 'Hours', value: shortHours },
   { icon: 'receipt', label: 'Admission', value: shortAdmission },
-].filter((f) => f.value) as { icon: 'star' | 'clock' | 'receipt' | 'train'; label: string; value: string }[];
+].filter((f) => f.value) as { icon: 'star' | 'clock' | 'receipt' | 'train'; label: string; value: string; href?: string }[];
 const [leadParagraph, ...moreParagraphs] = d.description_en;
 
 const TRAVELER_LABELS = {
@@ -175,7 +181,13 @@ const description = `${d.summary_en} Local videos, opening hours, access and tra
             >
               <Icon name={f.icon} size={16} strokeWidth={1.4} class="text-gold" />
               <p class="label mt-3">{f.label}</p>
-              <p class="mt-1 text-[0.875rem] leading-snug">{f.value}</p>
+              {f.href ? (
+                <a href={f.href} class="mt-1 block text-[0.875rem] leading-snug">
+                  {f.value}
+                </a>
+              ) : (
+                <p class="mt-1 text-[0.875rem] leading-snug">{f.value}</p>
+              )}
             </li>
           ))}
         </ul>
@@ -230,11 +242,19 @@ const description = `${d.summary_en} Local videos, opening hours, access and tra
         }
 
         {
-          (d.access_en || d.nearest_station) && (
-            <section class="mt-14 md:mt-20" aria-labelledby="access-heading" data-reveal>
+          (d.directions || d.access_en || d.nearest_station) && (
+            <section id="getting-there" class="mt-14 scroll-mt-8 md:mt-20" aria-labelledby="access-heading" data-reveal>
               <h2 id="access-heading" class="label label-gold border-t border-line pt-5">Getting there by public transport</h2>
-              {d.nearest_station && <p class="label mt-6 !text-ink">{d.nearest_station}</p>}
-              {d.access_en && <p class="mt-3 max-w-xl text-[0.9375rem]">{d.access_en}</p>}
+              {d.directions ? (
+                <div class="mt-6">
+                  <RouteCard directions={d.directions} destination={d.name_en} />
+                </div>
+              ) : (
+                <>
+                  {d.nearest_station && <p class="label mt-6 !text-ink">{d.nearest_station}</p>}
+                  {d.access_en && <p class="mt-3 max-w-xl text-[0.9375rem]">{d.access_en}</p>}
+                </>
+              )}
             </section>
           )
         }

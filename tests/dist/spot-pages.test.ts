@@ -35,6 +35,21 @@ describe('Nagoya Castle page', () => {
     expect([...positions].sort((a, b) => a - b)).toEqual(positions);
   });
 
+  it('draws the route card from Nagoya Station with lines, transfer and exit', () => {
+    const start = html.indexOf('id="getting-there"');
+    const section = html.slice(start, html.indexOf('id="hours-heading"'));
+    expect(section).toContain('From Nagoya Station');
+    expect(section).toContain('¥240');
+    for (const text of ['Higashiyama Line', 'Meijo Line', 'Sakae', 'Nagoyajo', 'Exit 7', 'Shiyakusho']) {
+      expect(section).toContain(text);
+    }
+    expect(section.indexOf('Higashiyama Line')).toBeLessThan(section.indexOf('Meijo Line'));
+  });
+
+  it('links the at-a-glance travel time to the directions', () => {
+    expect(html).toMatch(/<a href="#getting-there"[^>]*>\s*15 min/);
+  });
+
   it('shows the star rating out of 5', () => {
     expect(html).toMatch(/\d out of 5 for overseas visitors/);
   });
