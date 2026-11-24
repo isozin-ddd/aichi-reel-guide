@@ -9,9 +9,9 @@
   "longitude": 136.8991,
   "summary_en": "Tokugawa Ieyasu's great castle, where the rebuilt Hommaru Palace glows with gold-leaf paintings. The main keep is closed for now.",
   "description_en": [
-    "The keep is closed for now, so come for the Hommaru Palace: a run of tatami rooms rebuilt with traditional joinery, their sliding doors painted with tigers, pheasants and cherry blossoms in the Kano-school style. Entry is included in the castle ticket.",
     "Tokugawa Ieyasu ordered the castle built in 1610, and it was home to the Owari Tokugawa for more than two centuries. Air raids in May 1945 destroyed most of it; the keep, crowned with golden shachihoko, was rebuilt in concrete in 1959.",
-    "Allow one to two hours. Walk the stone walls and moats, find the Southwest Corner Watchtower — one of the few Edo-period buildings to survive the war — and come in late March or early April, when about 900 cherry trees bloom across the grounds."
+    "The Hommaru Palace was rebuilt with traditional joinery and opened in full in 2018. Its sliding doors are painted with tigers, pheasants and cherry blossoms in the Kano-school style.",
+    "Come in late March or early April, when about 900 cherry trees bloom across the grounds. The free English volunteer tours are not held from 29 December to 4 January, and were paused from 22 June to 30 September in 2026."
   ],
   "highlights_en": [
     "Hommaru Palace's painted sliding doors",
@@ -19,10 +19,41 @@
     "Free English tours at 12:30 most days"
   ],
   "price_level": 1,
-  "opening_hours": "9:00–16:30 (last entry 16:00). Adults ¥1,000 from 1 October 2026; junior high school age and under free.",
+  "opening_hours": "9:00–16:30. Last entry to the Hommaru Palace and the Nishinomaru Treasure House is 16:00, and both are about a 10-minute walk from the gates. Hours are longer on some festival evenings, such as cherry-blossom season.",
   "closed_days": "29 December – 1 January (may change for events)",
-  "nearest_station": "Nagoyajo Station (Meijo Line, M07)",
-  "access_en": "5-minute walk from Exit 7 of Nagoyajo Station on the Meijo subway line. The Me-guru sightseeing bus and city buses also stop at the main gate (Nagoyajo Seimon-mae). Free volunteer English tours start at 12:30 from the Main Gate and East Gate (not held 29 December – 4 January, and paused 22 June – 30 September in 2026).",
+  "nearest_station": "Nagoyajo Station (Meijo subway line, M07), Exit 7",
+  "access_en": "From Nagoya Station, take the Higashiyama subway line to Sakae and change to the Meijo line for two stops to Nagoyajo Station (about 15 minutes, ¥240). From Exit 7 it is about a 5-minute walk to the East Gate. Or take the Me~guru sightseeing bus from stop 11 at the Nagoya Station bus terminal to the Nagoya Castle stop, about a minute from the Main Gate; it runs Tuesday to Sunday (if Monday is a holiday, it runs then and rests on Tuesday instead), and a one-day pass costs ¥500. City bus Sakae 13 from Sakae also stops right at the Main Gate (Nagoya-jo Seimon-mae).",
+  "admission_en": "Adults ¥1,000; junior high school age and under free. The castle ticket includes the Hommaru Palace. A combined ticket with the Tokugawa-en garden is ¥1,040 (cash only). Cards and e-money are accepted at the ticket counter, and tickets can also be bought online through asoview.",
+  "visitor_rating": {
+    "stars": 4,
+    "reasons_en": [
+      "The rebuilt Hommaru Palace is the real draw: room after room of gold-leaf sliding-door paintings, finished with traditional joinery. Few places in Japan let you walk through a palace like this.",
+      "Easy for first-timers. It is a short subway ride from Nagoya Station, and free English volunteer tours leave the Main and East gates at 12:30 most days.",
+      "Why not five: the main keep has been closed for years, so you can admire it and its golden shachihoko only from outside, and the palace can have a long queue."
+    ]
+  },
+  "route_en": [
+    {
+      "title_en": "Start early and go straight to the Hommaru Palace",
+      "text_en": "Enter at 9:00 and head for the palace first, about 10 minutes from either gate. Queues build from late morning; the posted wait can reach 40 minutes."
+    },
+    {
+      "title_en": "Look up at the keep and its golden shachihoko",
+      "text_en": "The keep is closed, but the Honmaru courtyard right beside the palace gives the classic close-up of its green roofs and the two golden shachihoko."
+    },
+    {
+      "title_en": "Walk the stone walls to the Southwest Corner Watchtower",
+      "text_en": "Follow the moat to one of the few Edo-period buildings that survived 1945. It is usually seen from outside; the inside opens only during some festivals."
+    },
+    {
+      "title_en": "Rest in the Ninomaru Garden",
+      "text_en": "On the east side of the grounds, this designated scenic garden is a calm stop before you leave by the East Gate."
+    },
+    {
+      "title_en": "Eat at Kinshachi Yokocho",
+      "text_en": "Just outside the gates. The Yoshinao zone by the Main Gate serves Nagoya classics such as miso-nikomi udon, hitsumabushi and miso katsu; the Muneharu zone by the East Gate is more modern and stays open into the evening."
+    }
+  ],
   "official_url": "https://www.nagoyajo.city.nagoya.jp/en/",
   "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Nagoya%20Castle",
   "image": "../../assets/spots/nagoya-castle-keep.jpg",

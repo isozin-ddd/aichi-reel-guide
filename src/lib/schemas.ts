@@ -82,6 +82,29 @@ export function createSpotSchema<I extends AnySchema, A extends AnySchema, C ext
       closed_days: optionalText,
       nearest_station: optionalText,
       access_en: optionalText,
+      /** Admission prices for visitors, in plain English. */
+      admission_en: optionalText.optional(),
+
+      /** How strongly we recommend the spot to overseas visitors, with our reasons. Shown first on the page. */
+      visitor_rating: z
+        .object({
+          stars: z.number().int().min(1).max(5),
+          reasons_en: z.array(z.string().trim().min(10)).min(1),
+        })
+        .strict()
+        .optional(),
+
+      /** Suggested way to see the spot, in order. */
+      route_en: z
+        .array(
+          z
+            .object({
+              title_en: z.string().trim().min(2),
+              text_en: z.string().trim().min(10),
+            })
+            .strict(),
+        )
+        .default([]),
 
       official_url: httpsUrl,
       google_maps_url: httpsUrl,

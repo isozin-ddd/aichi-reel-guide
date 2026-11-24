@@ -28,6 +28,17 @@ describe('Nagoya Castle page', () => {
     }
   });
 
+  it('puts the visitor info in priority order: rating, access, hours, admission, route', () => {
+    const ids = ['rating-heading', 'access-heading', 'hours-heading', 'admission-heading', 'route-heading', 'about-heading'];
+    const positions = ids.map((id) => html.indexOf(`id="${id}"`));
+    expect(positions.every((p) => p > 0)).toBe(true);
+    expect([...positions].sort((a, b) => a - b)).toEqual(positions);
+  });
+
+  it('shows the star rating out of 5', () => {
+    expect(html).toMatch(/\d out of 5 for overseas visitors/);
+  });
+
   it('credits Photock', () => {
     expect(html).toContain('Photo: Photock');
   });
